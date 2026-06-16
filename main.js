@@ -253,7 +253,7 @@ function initForm() {
                 "궁합": formData.emailServices["궁합"]
             };
 
-            fetch("https://script.google.com/macros/s/AKfycbz4TPvT-WUrx47Pjfli9Ib_VKwOBj2is4kRz1SZJkyc-EwF4BkBgOisyXxy4iR7cz8P8A/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbx9SVUUk7-zpBiJ4gBObT-vvEGl7qzf5-_S_STdk0JGFmY4zoS6EiIDkCIiHTH5Kzxu/exec", {
                 method: "POST",
                 body: JSON.stringify(finalPayload)
             })
