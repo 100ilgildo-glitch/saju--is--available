@@ -12,11 +12,6 @@
                     🔥 30% 특별 할인 진행 중 (선착순 마감)
                 </div>
 
-                <div class="hero-buttons animate-fade-in-delay-2">
-                    <a href="https://www.youtube.com/shorts/AgQaGt2y9Vs" target="_blank" class="btn btn-video">
-                        <i class="fab fa-youtube"></i> 동영상 보기
-                    </a>
-
 ### 주요 특징
 
 * ✨ 전통과 현대가 조화된 따뜻한 디자인
