@@ -1,5 +1,4 @@
 [README.md](https://github.com/user-attachments/files/28983415/README.md)
-[README.md](https://github.com/user-attachments/files/28489192/README.md)
 
 # 사주마당 - 평생사주 및 운세 상담 웹사이트
 
@@ -8,10 +7,9 @@
 ## 🌟 프로젝트 개요
 
 **사주마당**은 고객이 온라인으로 편리하게 사주 상담을 신청할 수 있는 전문 웹사이트입니다. 명리학 전문 플랫폼과 협업하여 24시간 내 이메일로 상세한 PDF 리포트를 제공합니다.
-<div class="sale-banner">
-                    🔥 30% 특별 할인 진행 중 (선착순 마감)
-                </div>
 
+🔥 30% 특별 할인 진행 중 (선착순 마감)
+               
 ### 주요 특징
 
 * ✨ 전통과 현대가 조화된 따뜻한 디자인
