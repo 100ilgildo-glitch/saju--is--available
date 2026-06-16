@@ -8,6 +8,14 @@
 ## 🌟 프로젝트 개요
 
 **사주마당**은 고객이 온라인으로 편리하게 사주 상담을 신청할 수 있는 전문 웹사이트입니다. 명리학 전문 플랫폼과 협업하여 24시간 내 이메일로 상세한 PDF 리포트를 제공합니다.
+<div class="sale-banner">
+                    🔥 30% 특별 할인 진행 중 (선착순 마감)
+                </div>
+
+                <div class="hero-buttons animate-fade-in-delay-2">
+                    <a href="https://www.youtube.com/shorts/AgQaGt2y9Vs" target="_blank" class="btn btn-video">
+                        <i class="fab fa-youtube"></i> 동영상 보기
+                    </a>
 
 ### 주요 특징
 
