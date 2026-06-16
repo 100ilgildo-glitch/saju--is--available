@@ -1,5 +1,5 @@
 // ===================================
-// 사주마당 - 통합 자바스크립트 (시간 추출 기능 완벽 보완본)
+// 사주마당 - 통합 자바스크립트 (초강력 데이터 추출 보완본)
 // ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -133,18 +133,18 @@ function initForm() {
         el.innerHTML += html;
     }
 
-    // 다양한 ID 형태 지원을 위해 안전하게 채우기
-    ['birth_year1', 'year1'].forEach(id => fillSelect(id, new Date().getFullYear(), 1900, '년', false));
-    ['birth_month1', 'month1'].forEach(id => fillSelect(id, 1, 12, '월', true));
-    ['birth_day1', 'day1'].forEach(id => fillSelect(id, 1, 31, '일', true));
-    ['birth_hour1', 'hour1'].forEach(id => fillSelect(id, 0, 23, '시', true));
-    ['birth_minute1', 'minute1'].forEach(id => fillSelect(id, 0, 59, '분', true));
+    // 존재하는 모든 형태의 ID에 옵션 자동 주입
+    ['birth_year1', 'year1', 'birthYear1'].forEach(id => fillSelect(id, new Date().getFullYear(), 1900, '년', false));
+    ['birth_month1', 'month1', 'birthMonth1'].forEach(id => fillSelect(id, 1, 12, '월', true));
+    ['birth_day1', 'day1', 'birthDay1'].forEach(id => fillSelect(id, 1, 31, '일', true));
+    ['birth_hour1', 'hour1', 'birthHour1', 'hour_1'].forEach(id => fillSelect(id, 0, 23, '시', true));
+    ['birth_minute1', 'minute1', 'birthMinute1', 'minute_1'].forEach(id => fillSelect(id, 0, 59, '분', true));
 
-    ['birth_year2', 'year2'].forEach(id => fillSelect(id, new Date().getFullYear(), 1900, '년', false));
-    ['birth_month2', 'month2'].forEach(id => fillSelect(id, 1, 12, '월', true));
-    ['birth_day2', 'day2'].forEach(id => fillSelect(id, 1, 31, '일', true));
-    ['birth_hour2', 'hour2'].forEach(id => fillSelect(id, 0, 23, '시', true));
-    ['birth_minute2', 'minute2'].forEach(id => fillSelect(id, 0, 59, '분', true));
+    ['birth_year2', 'year2', 'birthYear2'].forEach(id => fillSelect(id, new Date().getFullYear(), 1900, '년', false));
+    ['birth_month2', 'month2', 'birthMonth2'].forEach(id => fillSelect(id, 1, 12, '월', true));
+    ['birth_day2', 'day2', 'birthDay2'].forEach(id => fillSelect(id, 1, 31, '일', true));
+    ['birth_hour2', 'hour2', 'birthHour2', 'hour_2'].forEach(id => fillSelect(id, 0, 23, '시', true));
+    ['birth_minute2', 'minute2', 'birthMinute2', 'minute_2'].forEach(id => fillSelect(id, 0, 59, '분', true));
 
     function calculateTotal() {
         let total = 0;
@@ -181,11 +181,11 @@ function initForm() {
     serviceRadios.forEach(radio => radio.addEventListener('change', calculateTotal));
     document.querySelectorAll('input[type="radio"][value="none"]').forEach(radio => radio.addEventListener('change', calculateTotal));
 
-    function setupTimeUnknown(chkId, hourId1, hourId2, minId1, minId2) {
+    function setupTimeUnknown(chkId, hourIds, minIds) {
         const chk = document.getElementById(chkId);
         if (chk) {
             chk.addEventListener('change', function() {
-                [hourId1, hourId2, minId1, minId2].forEach(id => {
+                hourIds.concat(minIds).forEach(id => {
                     const el = document.getElementById(id);
                     if(el) {
                         el.disabled = chk.checked;
@@ -195,8 +195,8 @@ function initForm() {
             });
         }
     }
-    setupTimeUnknown('time_unknown1', 'birth_hour1', 'hour1', 'birth_minute1', 'minute1');
-    setupTimeUnknown('time_unknown2', 'birth_hour2', 'hour2', 'birth_minute2', 'minute2');
+    setupTimeUnknown('time_unknown1', ['birth_hour1', 'hour1', 'birthHour1', 'hour_1'], ['birth_minute1', 'minute1', 'birthMinute1', 'minute_1']);
+    setupTimeUnknown('time_unknown2', ['birth_hour2', 'hour2', 'birthHour2', 'hour_2'], ['birth_minute2', 'minute2', 'birthMinute2', 'minute_2']);
 
     const phoneInput = document.getElementById('phone');
     if (phoneInput) {
@@ -251,13 +251,9 @@ function initForm() {
                 "건강운": formData.emailServices["건강운"],
                 "직업운": formData.emailServices["직업운"],
                 "궁합": formData.emailServices["궁합"]
-            };            .then(res => res.json())
+            };
 
-
-            fetch("https://script.google.com/macros/s/AKfycbx9SVUUk7-zpBiJ4gBObT-vvEGl7qzf5-_S_STdk0JGFmY4zoS6EiIDkCIiHTH5Kzxu/exec", {
-                method: "POST",
-                body: JSON.stringify(finalPayload)
-            })            .then(res => res.json())", {
+            fetch("https://script.google.com/macros/s/AKfycbz4TPvT-WUrx47Pjfli9Ib_VKwOBj2is4kRz1SZJkyc-EwF4BkBgOisyXxy4iR7cz8P8A/exec", {
                 method: "POST",
                 body: JSON.stringify(finalPayload)
             })
@@ -276,9 +272,13 @@ function initForm() {
 function collectFormData() {
     const commentsEl = document.getElementById('comments') || document.getElementById('additional_questions');
     
-    function getVal(id1, id2) {
-        const el = document.getElementById(id1) || document.getElementById(id2);
-        return el ? el.value : '';
+    // 💡 어떤 ID로 정의되어 있든 무조건 값을 찾아내는 초정밀 탐색기함수
+    function findValue(possibleIds) {
+        for (let id of possibleIds) {
+            const el = document.getElementById(id);
+            if (el && el.value !== undefined) return el.value;
+        }
+        return '';
     }
     
     function getChecked(id) {
@@ -286,13 +286,24 @@ function collectFormData() {
         return el ? el.checked : false;
     }
 
+    // 💡 합계금액 텍스트 강제 추출 (totalPrice가 안 잡히면 내부 텍스트 전체 검색)
     const priceEl = document.getElementById('totalPrice');
-    const totalPriceText = priceEl ? priceEl.textContent : '0원';
+    let totalPriceText = priceEl ? priceEl.textContent : '';
+    if(!totalPriceText) {
+        const altPrice = document.querySelector('.total-price') || document.querySelector('[path="totalPrice"]');
+        totalPriceText = altPrice ? altPrice.textContent : '0원';
+    }
 
-    // 시간 값 안전하게 긁어오기
-    const h1 = getVal('birth_hour1', 'hour1');
-    const m1 = getVal('birth_minute1', 'minute1');
+    // 1인 시간 추출
+    const h1 = findValue(['birth_hour1', 'hour1', 'birthHour1', 'hour_1']);
+    const m1 = findValue(['birth_minute1', 'minute1', 'birthMinute1', 'minute_1']);
     const timeStr1 = getChecked('time_unknown1') ? '시간 미상' : (h1 && m1 ? h1 + '시 ' + m1 + '분' : '미입력');
+
+    // 1인 생년월일 추출
+    const y1 = findValue(['birth_year1', 'year1', 'birthYear1']);
+    const mo1 = findValue(['birth_month1', 'month1', 'birthMonth1']);
+    const d1 = findValue(['birth_day1', 'day1', 'birthDay1']);
+    const birthStr1 = (y1 && mo1 && d1) ? `${y1}년 ${mo1}월 ${d1}일` : '미입력';
 
     const data = {
         services1: [],
@@ -300,15 +311,15 @@ function collectFormData() {
         totalPrice: totalPriceText,
         emailServices: { "평생사주": "", "2026년 신년운": "", "재물운": "", "건강운": "", "직업운": "", "궁합": "" },
         person1: {
-            name: getVal('name1'),
-            gender: getVal('gender1') === 'male' ? '남성' : '여성',
-            birthType: getVal('birth_type1') === 'solar' ? '양력' : '음력',
-            birthDate: getVal('birth_year1', 'year1') + '년 ' + getVal('birth_month1', 'month1') + '월 ' + getVal('birth_day1', 'day1') + '일',
+            name: findValue(['name1', 'birth_name1']),
+            gender: findValue(['gender1']) === 'male' ? '남성' : '여성',
+            birthType: findValue(['birth_type1', 'birthType1']) === 'solar' ? '양력' : '음력',
+            birthDate: birthStr1,
             birthTime: timeStr1
         },
         contact: {
-            phone: getVal('phone'),
-            email: getVal('email')
+            phone: findValue(['phone', 'telephone']),
+            email: findValue(['email', 'user_email'])
         },
         additionalQuestions: commentsEl ? commentsEl.value : ''
     };
@@ -339,15 +350,20 @@ function collectFormData() {
 
     const p2Sect = document.getElementById('person2Section');
     if (p2Sect && p2Sect.style.display === 'block') {
-        const h2 = getVal('birth_hour2', 'hour2');
-        const m2 = getVal('birth_minute2', 'minute2');
+        const h2 = findValue(['birth_hour2', 'hour2', 'birthHour2', 'hour_2']);
+        const m2 = findValue(['birth_minute2', 'minute2', 'birthMinute2', 'minute_2']);
         const timeStr2 = getChecked('time_unknown2') ? '시간 미상' : (h2 && m2 ? h2 + '시 ' + m2 + '분' : '미입력');
 
+        const y2 = findValue(['birth_year2', 'year2', 'birthYear2']);
+        const mo2 = findValue(['birth_month2', 'month2', 'birthMonth2']);
+        const d2 = findValue(['birth_day2', 'day2', 'birthDay2']);
+        const birthStr2 = (y2 && mo2 && d2) ? `${y2}년 ${mo2}월 ${d2}일` : '미입력';
+
         data.person2 = {
-            name: getVal('name2'),
-            gender: getVal('gender2') === 'male' ? '남성' : '여성',
-            birthType: getVal('birth_type2') === 'solar' ? '양력' : '음력',
-            birthDate: getVal('birth_year2', 'year2') + '년 ' + getVal('birth_month2', 'month2') + '월 ' + getVal('birth_day2', 'day2') + '일',
+            name: findValue(['name2', 'birth_name2']),
+            gender: findValue(['gender2']) === 'male' ? '남성' : '여성',
+            birthType: findValue(['birth_type2', 'birthType2']) === 'solar' ? '양력' : '음력',
+            birthDate: birthStr2,
             birthTime: timeStr2
         };
     }
