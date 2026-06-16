@@ -1,8 +1,9 @@
 // ===================================
-// 사주마당 - 통합 자바스크립트 (초강력 데이터 추출 보완본)
+// 사주마당 - 콘솔 추적 강화형 자바스크립트
 // ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("📢 사주마당 프로그램이 정상적으로 시작되었습니다!");
     initNavigation();
     initScrollEffects();
     initForm();
@@ -116,6 +117,13 @@ function initForm() {
     const person2Section = document.getElementById('person2Section');
     const serviceRadios = document.querySelectorAll('input[type="radio"][data-price]');
     
+    if (!form) {
+        console.error("❌ [심각] 화면에서 'applicationForm'이라는 ID를 가진 폼 태그를 찾을 수 없습니다. HTML 파일을 확인해 주세요.");
+        return;
+    } else {
+        console.log("✅ 신청서 폼 감지 완료 스위치 온!");
+    }
+
     function fillSelect(elementId, start, end, suffix, pad) {
         const el = document.getElementById(elementId);
         if (!el) return;
@@ -208,71 +216,79 @@ function initForm() {
         });
     }
 
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const hasSelectedService = Array.from(serviceRadios).some(radio => radio.checked && radio.value !== 'none');
-            if (!hasSelectedService) { alert('최소 1개 이상의 서비스를 선택해주세요.'); return; }
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log("🚀 [작동 시작] 사용자가 신청하기 버튼을 눌렀습니다!");
+        
+        const hasSelectedService = Array.from(serviceRadios).some(radio => radio.checked && radio.value !== 'none');
+        if (!hasSelectedService) { alert('최소 1개 이상의 서비스를 선택해주세요.'); return; }
 
-            const emailValue = document.getElementById('email').value;
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) { alert('올바른 이메일 주소를 입력해주세요.'); return; }
+        const emailValue = document.getElementById('email').value;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) { alert('올바른 이메일 주소를 입력해주세요.'); return; }
 
-            const phoneValue = document.getElementById('phone').value;
-            if (!/^\d{3}-\d{4}-\d{4}$/.test(phoneValue)) { alert('올바른 전화번호 형식을 입력해주세요.'); return; }
+        const phoneValue = document.getElementById('phone').value;
+        if (!/^\d{3}-\d{4}-\d{4}$/.test(phoneValue)) { alert('올바른 전화번호 형식을 입력해주세요.'); return; }
 
-            const formData = collectFormData();
-            const nowStr = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-            
-            const finalPayload = {
-                "접수일": nowStr,
-                "상담신청서1": formData.services1.join(', '),
-                "이름1": formData.person1.name,
-                "성별1": formData.person1.gender,
-                "생년월일1": formData.person1.birthDate,
-                "시간1": formData.person1.birthTime,
-                "양력음력1": formData.person1.birthType,
-                "상담신청서2": formData.person2 ? formData.services2.join(', ') : '',
-                "이름2": formData.person2 ? formData.person2.name : '',
-                "성별2": formData.person2 ? formData.person2.gender : '',
-                "생년월일2": formData.person2 ? formData.person2.birthDate : '',
-                "시간2": formData.person2 ? formData.person2.birthTime : '',
-                "양력음력2": formData.person2 ? formData.person2.birthType : '',
-                "합계금액": formData.totalPrice,
-                "전화번호": formData.contact.phone,
-                "이메일": formData.contact.email,
-                "비고": formData.additionalQuestions,
+        console.log("📦 화면에 입력된 데이터를 수집하는 중...");
+        const formData = collectFormData();
+        console.log("수집된 데이터 확인용:", formData);
 
-                "to_name": formData.person1.name,
-                "접수일시": nowStr,
-                "평생사주": formData.emailServices["평생사주"],
-                "신년운": formData.emailServices["2026년 신년운"],
-                "재물운": formData.emailServices["재물운"],
-                "건강운": formData.emailServices["건강운"],
-                "직업운": formData.emailServices["직업운"],
-                "궁합": formData.emailServices["궁합"]
-            };
+        const nowStr = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+        
+        const finalPayload = {
+            "접수일": nowStr,
+            "상담신청서1": formData.services1.join(', '),
+            "이름1": formData.person1.name,
+            "성별1": formData.person1.gender,
+            "생년월일1": formData.person1.birthDate,
+            "시간1": formData.person1.birthTime,
+            "양력음력1": formData.person1.birthType,
+            "상담신청서2": formData.person2 ? formData.services2.join(', ') : '',
+            "이름2": formData.person2 ? formData.person2.name : '',
+            "성별2": formData.person2 ? formData.person2.gender : '',
+            "생년월일2": formData.person2 ? formData.person2.birthDate : '',
+            "시간2": formData.person2 ? formData.person2.birthTime : '',
+            "양력음력2": formData.person2 ? formData.person2.birthType : '',
+            "합계금액": formData.totalPrice,
+            "전화번호": formData.contact.phone,
+            "이메일": formData.contact.email,
+            "비고": formData.additionalQuestions,
 
-            fetch("https://script.google.com/macros/s/AKfycbx9SVUUk7-zpBiJ4gBObT-vvEGl7qzf5-_S_STdk0JGFmY4zoS6EiIDkCIiHTH5Kzxu/exec", {
-                method: "POST",
-                body: JSON.stringify(finalPayload)
-            })
-            .then(res => res.json())
-            .then(data => console.log("✅ 구글 시트 저장 완료:", data))
-            .catch(err => console.error("❌ 구글 시트 저장 실패:", err));
-            
-            showSuccessModal(formData);
-            form.reset();
-            calculateTotal();
+            "to_name": formData.person1.name,
+            "접수일시": nowStr,
+            "평생사주": formData.emailServices["평생사주"],
+            "신년운": formData.emailServices["2026년 신년운"],
+            "재물운": formData.emailServices["재물운"],
+            "건강운": formData.emailServices["건강운"],
+            "직업운": formData.emailServices["직업운"],
+            "궁합": formData.emailServices["궁합"]
+        };
+
+        console.log("📡 구글 시트로 데이터를 전송합니다...");
+        
+        fetch("https://script.google.com/macros/s/AKfycbx9SVUUk7-zpBiJ4gBObT-vvEGl7qzf5-_S_STdk0JGFmY4zoS6EiIDkCIiHTH5Kzxu/exec",{
+            method: "POST",
+            body: JSON.stringify(finalPayload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log("✅ [구글 시트 저장 완전 성공!!!]", data);
+        })
+        .catch(err => {
+            console.error("❌ [구글 시트 저장 실패] 에러 원인 내용:", err);
         });
-    }
+        
+        showSuccessModal(formData);
+        form.reset();
+        calculateTotal();
+    });
+
     calculateTotal();
 }
 
 function collectFormData() {
     const commentsEl = document.getElementById('comments') || document.getElementById('additional_questions');
     
-    // 💡 어떤 ID로 정의되어 있든 무조건 값을 찾아내는 초정밀 탐색기함수
     function findValue(possibleIds) {
         for (let id of possibleIds) {
             const el = document.getElementById(id);
@@ -286,7 +302,6 @@ function collectFormData() {
         return el ? el.checked : false;
     }
 
-    // 💡 합계금액 텍스트 강제 추출 (totalPrice가 안 잡히면 내부 텍스트 전체 검색)
     const priceEl = document.getElementById('totalPrice');
     let totalPriceText = priceEl ? priceEl.textContent : '';
     if(!totalPriceText) {
@@ -294,12 +309,10 @@ function collectFormData() {
         totalPriceText = altPrice ? altPrice.textContent : '0원';
     }
 
-    // 1인 시간 추출
     const h1 = findValue(['birth_hour1', 'hour1', 'birthHour1', 'hour_1']);
     const m1 = findValue(['birth_minute1', 'minute1', 'birthMinute1', 'minute_1']);
     const timeStr1 = getChecked('time_unknown1') ? '시간 미상' : (h1 && m1 ? h1 + '시 ' + m1 + '분' : '미입력');
 
-    // 1인 생년월일 추출
     const y1 = findValue(['birth_year1', 'year1', 'birthYear1']);
     const mo1 = findValue(['birth_month1', 'month1', 'birthMonth1']);
     const d1 = findValue(['birth_day1', 'day1', 'birthDay1']);
