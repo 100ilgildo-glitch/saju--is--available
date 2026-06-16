@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <div class="emblem"></div>
     <title>사주마당 - 평생사주 및 운세 상담</title>
     <meta name="description" content="정통 명리학 전문인과 함께하는 평생사주, 신년운, 재물운, 건강운, 직업운, 궁합 상담 서비스">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,6 +49,7 @@
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
+                <div class="emblem"></div> <!-- 헤드에서 이쪽 영역으로 이동 유도 -->
                 <h1 class="hero-title animate-fade-in">
                     <span class="title-main">사주마당</span><br>
                     <span class="title-sub">평생사주 및 운세 상담</span>
@@ -63,20 +63,18 @@
                 </div>
 
                 <div class="hero-buttons animate-fade-in-delay-2">
-                    <a href="https://www.youtube.com/shorts/AgQaGt2y9Vs" target="_blank" class="btn btn-primary">
-                        <i class="fas fa-edit"></i> 동영상
+                    <a href="https://www.youtube.com/shorts/AgQaGt2y9Vs" target="_blank" class="btn btn-video">
+                        <i class="fab fa-youtube"></i> 동영상 보기
                     </a>
-
-                    <div class="hero-buttons animate-fade-in-delay-2">
-                        <a href="#application" class="btn btn-primary">
-                            <i class="fas fa-edit"></i> 상담 신청하기
-                        </a>
-                        <a href="#services" class="btn btn-secondary">
-                            <i class="fas fa-info-circle"></i> 서비스 보기
-                        </a>
-                    </div>
+                    <a href="#application" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> 상담 신청하기
+                    </a>
+                    <a href="#services" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> 서비스 보기
+                    </a>
                 </div>
             </div>
+        </div>
     </section>
 
     <!-- Services Section -->
@@ -532,17 +530,14 @@
 
                         <div class="form-group">
                             <label>생년월일 *</label>
-
                             <div style="display:flex; gap:8px;">
-                                <select id="birth_year1" required>
+                                <select id="birth_year1" name="birth_year1" required>
                                     <option value="">년도</option>
                                 </select>
-
-                                <select id="birth_month1" required>
+                                <select id="birth_month1" name="birth_month1" required>
                                     <option value="">월</option>
                                 </select>
-
-                                <select id="birth_day1" required>
+                                <select id="birth_day1" name="birth_day1" required>
                                     <option value="">일</option>
                                 </select>
                             </div>
@@ -550,13 +545,11 @@
 
                         <div class="form-group">
                             <label>태어난 시간</label>
-
                             <div style="display:flex; gap:8px;">
-                                <select id="birth_hour1">
+                                <select id="birth_hour1" name="birth_hour1">
                                     <option value="">시</option>
                                 </select>
-
-                                <select id="birth_minute1">
+                                <select id="birth_minute1" name="birth_minute1">
                                     <option value="">분</option>
                                 </select>
                             </div>
@@ -602,17 +595,14 @@
 
                         <div class="form-group">
                             <label>생년월일 *</label>
-
                             <div style="display:flex; gap:8px;">
-                                <select id="birth_year2" required>
+                                <select id="birth_year2" name="birth_year2">
                                     <option value="">년도</option>
                                 </select>
-
-                                <select id="birth_month2" required>
+                                <select id="birth_month2" name="birth_month2">
                                     <option value="">월</option>
                                 </select>
-
-                                <select id="birth_day2" required>
+                                <select id="birth_day2" name="birth_day2">
                                     <option value="">일</option>
                                 </select>
                             </div>
@@ -620,13 +610,11 @@
 
                         <div class="form-group">
                             <label>태어난 시간</label>
-
                             <div style="display:flex; gap:8px;">
-                                <select id="birth_hour2">
+                                <select id="birth_hour2" name="birth_hour2">
                                     <option value="">시</option>
                                 </select>
-
-                                <select id="birth_minute2">
+                                <select id="birth_minute2" name="birth_minute2">
                                     <option value="">분</option>
                                 </select>
                             </div>
@@ -666,7 +654,6 @@
                     <h3 class="form-section-title">
                         <i class="fas fa-question-circle"></i> 더 알고 싶은 내용 (선택사항)
                     </h3>
-
                     <div class="form-group">
                         <textarea id="additional_questions" name="additional_questions" rows="5"
                             placeholder="특별히 궁금하신 내용이나 상담받고 싶은 부분을 자유롭게 적어주세요"></textarea>
@@ -685,214 +672,180 @@
                     </ul>
                 </div>
 
-                <!-- 개인정보 동의 -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-shield-halved"></i> 개인정보 수집 및 이용 동의
-                    </h3>
-
-                    <div class="privacy-box"
-                        style="max-height:200px; overflow-y:auto; border:3px solid #ccc; padding:10px;">
-                        <strong>개인정보 수집 및 이용 동의서</strong><br><br>
-                        1. 상담신청서 작성 시 - 이름, 생년월일시, 성별, 연락처(전화번호, 이메일) 등은 사주상담 특성상 필요정보 자료로 상담의뢰인 동의로 간주합니다.<br><br>
-                        2. 수집된 고객님의 소중한 정보는 상담 목적 외에는 사용하지 않으며, 상담 목적 달성 후 즉시 파기됩니다.<br><br>
-                        3. 개인정보 수집 및 이용에 동의하셔야 상담신청서 제출이 가능합니다. 동의하지 않을 경우 상담신청이 제한됩니다.
-                    </div>
-                </div>
-
-                <div class="privacy-agree-container">
-                    <label class="privacy-agree-label">
-                        <input type="checkbox" id="privacyAgree" name="privacy_agreement" required>
-                        <span>위 개인정보 수집 및 이용에 동의합니다.</span>
+                <!-- 개인정보 동의 및 제출 버튼 (추가 보완 영역) -->
+                <div class="form-section checkbox-group agreement-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="privacy_agreement" name="privacy_agreement" required>
+                        <span>개인정보 수집 및 이용에 동의합니다. *</span>
                     </label>
                 </div>
 
-                <!-- 제출 버튼 -->
-                <div class="form-actions">
-                    <button type="submit" id="submitBtn" class="btn btn-primary btn-large" disabled>
-                        <i class="fas fa-paper-plane"></i> 상담 신청하기
-                    </button>
+                <div class="form-submit-container">
+                    <button type="submit" class="btn btn-submit">상담 신청 리포트 받기</button>
                 </div>
             </form>
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- FAQ Section (페이지 완성을 위한 추가 섹션) -->
     <section class="faq" id="faq">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">자주 묻는 질문</h2>
-                <p class="section-description">궁금하신 내용을 확인해보세요</p>
             </div>
-
             <div class="faq-list">
                 <div class="faq-item">
-                    <button class="faq-question">
-                        <span>태어난 시간을 모르는데 상담이 가능한가요?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>네, 가능합니다. 태어난 시간을 모르시는 경우 '시간 모름'으로 체크해주시면 됩니다. 다만 사주 분석의 정확도가 다소 낮아질 수 있으니, 가능하다면 가족이나
-                            출생신고서를 통해 확인해보시는 것을 권장합니다.</p>
-                    </div>
+                    <h4 class="faq-question">Q. 생년월일 시간을 모르면 상담이 불가능한가요?</h4>
+                    <p class="faq-answer">A. 태어난 시간을 모르실 경우, '태어난 시간을 모릅니다'에 체크해 주시면 명리학적 통계 기법(삼주 분석 및 대운 흐름 분석)을 바탕으로
+                        종합적인 흐름을 유추하여 리포트를 작성해 드립니다.</p>
                 </div>
-
                 <div class="faq-item">
-                    <button class="faq-question">
-                        <span>양력과 음력을 어떻게 구분하나요?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>일반적으로 병원에서 태어나신 경우 양력 생일을 사용합니다. 주민등록증과 출생신고서에 기재된 날짜가 양력입니다. 음력은 한국 전통 달력으로, 명절(설날, 추석 등)을
-                            계산하는데 사용됩니다. 확실하지 않으시면 부모님께 확인해보시기 바랍니다.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>리포트는 언제 받을 수 있나요?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>입금 확인 후 24시간 이내에 이메일로 PDF 형식의 리포트를 발송해드립니다. 주말이나 공휴일에는 처리가 다소 지연될 수 있으니 양해 부탁드립니다.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>환불이 가능한가요?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>주문 후 환불이 불가능합니다. 디지털 콘텐츠의 특성상 신청과 동시에 제작이 시작되므로 환불이 어렵습니다. 신중히 선택해주시기 바랍니다.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>개인정보는 안전하게 관리되나요?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>네, 고객님의 개인정보는 철저히 보호됩니다. 수집된 정보는 사주 상담 목적으로만 사용되며, 제3자에게 제공되지 않습니다. 상담 완료 후 일정 기간이 지나면 안전하게
-                            폐기됩니다.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>2인 상담은 어떤 경우에 신청하나요?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>부부, 연인, 가족, 사업 파트너 등 두 분의 사주를 함께 보고 싶으신 경우 2인 상담을 신청하시면 됩니다. 2인 상담은 개별 상담보다 저렴하며, 두 분의 사주를
-                            종합적으로 분석해드립니다.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">연락처</h2>
-                <p class="section-description">궁금하신 점은 언제든지 문의해주세요</p>
-            </div>
-
-            <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h3>전화 문의</h3>
-                        <p><a href="tel:010-9486-4936">010-9486-4936</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fab fa-kickstarter-k"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h3>카카오톡 상담</h3>
-                        <p><a href="https://pf.kakao.com/_MgnDn/chat" target="_blank" rel="noopener noreferrer">카카오톡 채널
-                                바로가기</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-building-columns"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h3>입금 계좌</h3>
-                        <p>농협 351-1377-7789-03<br>(예금주: 문광희)</p>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h3>처리 시간</h3>
-                        <p>입금 후 24시간 내<br>이메일 PDF 발송</p>
-                    </div>
+                    <h4 class="faq-question">Q. 리포트는 언제 받아볼 수 있나요?</h4>
+                    <p class="faq-answer">A. 신청서 작성 및 입금이 확인되면 명리학 전문가의 수작업 분석 과정을 거쳐 24시간 이메일로 상세 PDF 리포트를 발송해 드립니다.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" id="contact">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="palgwae-logo.png" alt="사주마당 팔괘 로고" class="footer-logo-image">
-                    <span class="footer-logo-text">사주마당</span>
-                </div>
-                <p class="footer-text">
-                    정통 명리학 전문인과 함께하는 정확하고 상세한 사주 분석<br>
-                    사주·운세 해석은 참고용 콘텐츠이며, 개인의 선택과 판단이 중요합니다
-                </p>
-                <p class="footer-copyright">
-                    &copy; 2026 사주마당. All rights reserved.
-                </p>
-            </div>
+            <p>© 2026 사주마당. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- Scroll to Top Button -->
-    <button class="scroll-to-top" id="scrollToTop" aria-label="맨 위로">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <!-- 인터랙션을 위한 JavaScript 코드 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. 생년월일 및 시간 셀렉트 박스 동적 데이터 채우기
+            const currentYear = 2026;
+            const yearSelects = [document.getElementById('birth_year1'), document.getElementById('birth_year2')];
+            const monthSelects = [document.getElementById('birth_month1'), document.getElementById('birth_month2')];
+            const daySelects = [document.getElementById('birth_day1'), document.getElementById('birth_day2')];
+            const hourSelects = [document.getElementById('birth_hour1'), document.getElementById('birth_hour2')];
+            const minuteSelects = [document.getElementById('birth_minute1'), document.getElementById('birth_minute2')];
 
-    <!-- Floating KakaoTalk Button -->
-    <a href="https://pf.kakao.com/_MgnDn/chat" target="_blank" rel="noopener noreferrer" class="kakao-floating-btn"
-        aria-label="카카오톡 상담">
-        <i class="fab fa-kickstarter-k"></i>
-        <span class="kakao-text">카톡상담</span>
-    </a>
+            // 년도 (1930 ~ 2026)
+            yearSelects.forEach(select => {
+                if (!select) return;
+                for (let y = currentYear; y >= 1930; y--) {
+                    let opt = document.createElement('option');
+                    opt.value = y; opt.textContent = y + '년';
+                    select.appendChild(opt);
+                }
+            });
 
-    <!-- Modal -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <div class="modal-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h2>신청이 완료되었습니다!</h2>
-            <div class="modal-body" id="modalBody"></div>
-            <div class="modal-actions">
-                <button class="btn btn-primary" id="modalConfirm">확인</button>
-            </div>
-        </div>
-    </div>
+            // 월 (1 ~ 12)
+            monthSelects.forEach(select => {
+                if (!select) return;
+                for (let m = 1; m <= 12; m++) {
+                    let opt = document.createElement('option');
+                    opt.value = m; opt.textContent = m + '월';
+                    select.appendChild(opt);
+                }
+            });
 
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+            // 일 (1 ~ 31)
+            daySelects.forEach(select => {
+                if (!select) return;
+                for (let d = 1; d <= 31; d++) {
+                    let opt = document.createElement('option');
+                    opt.value = d; opt.textContent = d + '일';
+                    select.appendChild(opt);
+                }
+            });
+
+            // 시 (0 ~ 23)
+            hourSelects.forEach(select => {
+                if (!select) return;
+                for (let h = 0; h <= 23; h++) {
+                    let opt = document.createElement('option');
+                    opt.value = h; opt.textContent = h + '시';
+                    select.appendChild(opt);
+                }
+            });
+
+            // 분 (0 ~ 59)
+            minuteSelects.forEach(select => {
+                if (!select) return;
+                for (let min = 0; min <= 59; min += 5) { // 5분 단위 세팅
+                    let opt = document.createElement('option');
+                    opt.value = min; opt.textContent = min + '분';
+                    select.appendChild(opt);
+                }
+            });
+
+            // 2. 시간 모름 체크박스 제어 리스너
+            for (let i = 1; i <= 2; i++) {
+                const chk = document.getElementById(`time_unknown${i}`);
+                const hour = document.getElementById(`birth_hour${i}`);
+                const min = document.getElementById(`birth_minute${i}`);
+                if (chk && hour && min) {
+                    chk.addEventListener('change', function () {
+                        hour.disabled = this.checked;
+                        min.disabled = this.checked;
+                        if (this.checked) { hour.value = ""; min.value = ""; }
+                    });
+                }
+            }
+
+            // 3. 서비스 선택에 따른 동적 가격 계산 및 2인 정보 섹션 노출 토글
+            const radioButtons = document.querySelectorAll('.service-option-choices input[type="radio"]');
+            const totalPriceValue = document.getElementById('totalPrice');
+            const person2Section = document.getElementById('person2Section');
+
+            // 2인 입력 폼 필수값 여부 처리 함수
+            function setPerson2Required(isRequired) {
+                const fields = person2Section.querySelectorAll('input[type="text"], select');
+                fields.forEach(field => {
+                    if (field.id === 'birth_year2' || field.id === 'birth_month2' || field.id === 'birth_day2' || field.id === 'name2' || field.id === 'gender2') {
+                        field.required = isRequired;
+                    }
+                });
+            }
+
+            function calculateTotal() {
+                let total = 0;
+                let requiresPerson2 = false;
+
+                radioButtons.forEach(radio => {
+                    if (radio.checked && radio.value !== 'none') {
+                        total += parseInt(radio.getAttribute('data-price') || 0);
+                        // 선택지 중 '2'인(가족/궁합 등) 상품이 있거나 궁합 서비스가 활성화된 경우
+                        if (radio.value === '2' || radio.name === 'service_compatibility') {
+                            requiresPerson2 = true;
+                        }
+                    }
+                });
+
+                // 가격 반영
+                totalPriceValue.textContent = total.toLocaleString() + '원';
+
+                // 2인 정보 섹션 토글 트리거
+                if (requiresPerson2) {
+                    person2Section.style.display = 'block';
+                    setPerson2Required(true);
+                } else {
+                    person2Section.style.display = 'none';
+                    setPerson2Required(false);
+                }
+            }
+
+            radioButtons.forEach(radio => radio.addEventListener('change', calculateTotal));
+
+            // 4. 모바일 네비게이션 토글 토글러
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function () {
+                    navMenu.classList.toggle('active');
+                    this.classList.toggle('open');
+                });
+            }
+        });
+
+    </script><script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // EmailJS 초기화
@@ -933,10 +886,7 @@
             });
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script src="main.js"></script>
-
+    
 </body>
-
 </html>
