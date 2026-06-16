@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엠블럼 애니메이션</title>
+    <link rel="stylesheet" href="style.css">
+    <div class="emblem"></div>
+    <title>사주마당 - 평생사주 및 운세 상담</title>
+    <meta name="description" content="정통 명리학 전문인과 함께하는 평생사주, 신년운, 재물운, 건강운, 직업운, 궁합 상담 서비스">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Noto+Serif+KR:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#hero" class="logo">
+                <img src="palgwae-logo.png" alt="사주마당 팔괘 로고" class="logo-image">
+                <span class="logo-text">사주마당</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#services" class="nav-link">서비스</a></li>
+                <li><a href="#process" class="nav-link">이용방법</a></li>
+                <li><a href="#application" class="nav-link">상담신청</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contact" class="nav-link">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title animate-fade-in">
+                    <span class="title-main">사주마당</span><br>
+                    <span class="title-sub">평생사주 및 운세 상담</span>
+                </h1>
+                <p class="hero-description animate-fade-in-delay">
+                    정통 명리학 전문인과 함께하는 정확하고 상세한 사주 분석<br>
+                    당신의 인생 항로를 밝혀드립니다.
+                </p>
+                <div class="sale-banner">
+                    🔥 30% 특별 할인 진행 중 (선착순 마감)
+                </div>
+
+                <div class="hero-buttons animate-fade-in-delay-2">
+                    <a href="https://www.youtube.com/shorts/AgQaGt2y9Vs" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> 동영상
+                    </a>
+
+                    <div class="hero-buttons animate-fade-in-delay-2">
+                        <a href="#application" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> 상담 신청하기
+                        </a>
+                        <a href="#services" class="btn btn-secondary">
+                            <i class="fas fa-info-circle"></i> 서비스 보기
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">상담 서비스</h2>
+                <p class="section-description">다양한 분야의 전문적인 사주 상담을 제공합니다</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- 평생사주 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3 class="service-title">평생사주</h3>
+                    <p class="service-description">
+                        타고난 성향과 특성, 인생의 중요한 시기와 전환점,
+                        재물운·건강운·직업운 등 종합 운세를 분석합니다
+                    </p>
+                    <div class="service-price">
+                        <div class="price-item">
+                            <span class="price-label">1인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">38,000원</s> <strong
+                                    style="color:#d4af37;">26,600원</strong></span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">2인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">60,000원</s> <strong
+                                    style="color:#d4af37;">42,000원</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 신년운 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-star"></i>
+                    </div>
+                    <h3 class="service-title">2026년 신년운</h3>
+                    <p class="service-description">
+                        새해의 운세와 흐름을 미리 파악하여
+                        한 해를 성공적으로 보낼 수 있도록 안내합니다
+                    </p>
+                    <div class="service-price">
+                        <div class="price-item">
+                            <span class="price-label">1인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">25,000원</s> <strong
+                                    style="color:#d4af37;">17,500원</strong></span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">2인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">38,000원</s> <strong
+                                    style="color:#d4af37;">26,600원</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 재물운 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="service-title">재물운</h3>
+                    <p class="service-description">
+                        재물의 흐름과 투자 시기, 재테크 방향성 등
+                        경제적 운세를 상세히 분석합니다
+                    </p>
+                    <div class="service-price">
+                        <div class="price-item">
+                            <span class="price-label">1인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">25,000원</s> <strong
+                                    style="color:#d4af37;">17,500원</strong></span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">2인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">38,000원</s> <strong
+                                    style="color:#d4af37;">26,600원</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 건강운 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="service-title">건강운</h3>
+                    <p class="service-description">
+                        신체적·정신적 건강 상태와 주의해야 할 시기,
+                        건강 관리 방법을 제시합니다
+                    </p>
+                    <div class="service-price">
+                        <div class="price-item">
+                            <span class="price-label">1인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">20,000원</s> <strong
+                                    style="color:#d4af37;">14,000원</strong></span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">2인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">30,000원</s> <strong
+                                    style="color:#d4af37;">21,000원</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 직업운 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="service-title">직업운</h3>
+                    <p class="service-description">
+                        적성과 재능, 직업 선택의 방향,
+                        승진과 이직 시기 등을 분석합니다
+                    </p>
+                    <div class="service-price">
+                        <div class="price-item">
+                            <span class="price-label">1인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">20,000원</s> <strong
+                                    style="color:#d4af37;">14,000원</strong></span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">2인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">30,000원</s> <strong
+                                    style="color:#d4af37;">21,000원</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 궁합 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="service-title">궁합</h3>
+                    <p class="service-description">
+                        연애·결혼·사업 파트너와의 궁합을 분석하여
+                        원만한 관계 유지 방법을 제시합니다
+                    </p>
+                    <div class="service-price">
+                        <div class="price-item single-price">
+                            <span class="price-label">2인</span>
+                            <span class="price-value"><s style="opacity:0.6;font-size:0.85em;">50,000원</s> <strong
+                                    style="color:#d4af37;">35,000원</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">이용 방법</h2>
+                <p class="section-description">간단한 4단계로 전문 사주 상담을 받으실 수 있습니다</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="step-title">상담 신청</h3>
+                    <p class="step-description">
+                        신청서에 이름, 생년월일시, 연락처 등
+                        필요한 정보를 입력해주세요
+                    </p>
+                </div>
+
+                <div class="process-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="step-title">입금 확인</h3>
+                    <p class="step-description">
+                        선택하신 서비스 금액을
+                        농협 351-1377-7789-03 문광희로 입금해주세요
+                    </p>
+                </div>
+
+                <div class="process-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="step-title">전문 분석</h3>
+                    <p class="step-description">
+                        명리학 전문가가 귀하의 사주를
+                        정확하고 상세하게 분석합니다
+                    </p>
+                </div>
+
+                <div class="process-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="step-title">리포트 발송</h3>
+                    <p class="step-description">
+                        입금 후 24시간 내
+                        이메일로 PDF 리포트를 전송해드립니다
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info">
+        <div class="container">
+            <div class="info-content">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3>신속한 처리</h3>
+                        <p>입금 후 24시간 내 리포트 발송</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3>전문성 보장</h3>
+                        <p>정통 명리학 전문인 상담</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3>개인정보 보호</h3>
+                        <p>철저한 보안으로 정보 관리</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3>상세한 리포트</h3>
+                        <p>PDF 형식의 체계적인 분석 자료</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form Section -->
+    <section class="application" id="application">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">상담 신청서</h2>
+                <p class="section-description">아래 정보를 정확히 입력해주세요. 입금 후 24시간 내 이메일로 리포트가 발송됩니다</p>
+            </div>
+
+            <form name="saju-form" method="POST" data-netlify="true" class="application-form">
+                <input type="hidden" name="form-name" value="saju-form">
+
+                <!-- 서비스 선택 -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-check-circle"></i> 신청할 서비스를 선택해주세요
+                    </h3>
+
+                    <div class="service-options">
+                        <div class="service-option">
+                            <div class="service-option-header">
+                                <h4>평생사주</h4>
+                            </div>
+                            <div class="service-option-choices">
+                                <label class="radio-label">
+                                    <input type="radio" name="service_lifelong" value="none" checked>
+                                    <span>선택 안 함</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_lifelong" value="1" data-price="26600">
+                                    <span>1인 (<s style="opacity:0.6;">38,000원</s> <strong
+                                            style="color:#d4af37;">26,600원</strong>)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_lifelong" value="2" data-price="42000">
+                                    <span>2인 (<s style="opacity:0.6;">60,000원</s> <strong
+                                            style="color:#d4af37;">42,000원</strong>)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="service-option">
+                            <div class="service-option-header">
+                                <h4>2026년 신년운</h4>
+                            </div>
+                            <div class="service-option-choices">
+                                <label class="radio-label">
+                                    <input type="radio" name="service_newyear" value="none" checked>
+                                    <span>선택 안 함</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_newyear" value="1" data-price="17500">
+                                    <span>1인 (<s style="opacity:0.6;">25,000원</s> <strong
+                                            style="color:#d4af37;">17,500원</strong>)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_newyear" value="2" data-price="26600">
+                                    <span>2인 (<s style="opacity:0.6;">38,000원</s> <strong
+                                            style="color:#d4af37;">26,600원</strong>)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="service-option">
+                            <div class="service-option-header">
+                                <h4>재물운</h4>
+                            </div>
+                            <div class="service-option-choices">
+                                <label class="radio-label">
+                                    <input type="radio" name="service_wealth" value="none" checked>
+                                    <span>선택 안 함</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_wealth" value="1" data-price="17500">
+                                    <span>1인 (<s style="opacity:0.6;">25,000원</s> <strong
+                                            style="color:#d4af37;">17,500원</strong>)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_wealth" value="2" data-price="26600">
+                                    <span>2인 (<s style="opacity:0.6;">38,000원</s> <strong
+                                            style="color:#d4af37;">26,600원</strong>)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="service-option">
+                            <div class="service-option-header">
+                                <h4>건강운</h4>
+                            </div>
+                            <div class="service-option-choices">
+                                <label class="radio-label">
+                                    <input type="radio" name="service_health" value="none" checked>
+                                    <span>선택 안 함</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_health" value="1" data-price="14000">
+                                    <span>1인 (<s style="opacity:0.6;">20,000원</s> <strong
+                                            style="color:#d4af37;">14,000원</strong>)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_health" value="2" data-price="21000">
+                                    <span>2인 (<s style="opacity:0.6;">30,000원</s> <strong
+                                            style="color:#d4af37;">21,000원</strong>)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="service-option">
+                            <div class="service-option-header">
+                                <h4>직업운</h4>
+                            </div>
+                            <div class="service-option-choices">
+                                <label class="radio-label">
+                                    <input type="radio" name="service_career" value="none" checked>
+                                    <span>선택 안 함</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_career" value="1" data-price="14000">
+                                    <span>1인 (<s style="opacity:0.6;">20,000원</s> <strong
+                                            style="color:#d4af37;">14,000원</strong>)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_career" value="2" data-price="21000">
+                                    <span>2인 (<s style="opacity:0.6;">30,000원</s> <strong
+                                            style="color:#d4af37;">21,000원</strong>)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="service-option">
+                            <div class="service-option-header">
+                                <h4>궁합</h4>
+                            </div>
+                            <div class="service-option-choices">
+                                <label class="radio-label">
+                                    <input type="radio" name="service_compatibility" value="none" checked>
+                                    <span>선택 안 함</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="service_compatibility" value="2" data-price="35000">
+                                    <span>2인 (<s style="opacity:0.6;">50,000원</s> <strong
+                                            style="color:#d4af37;">35,000원</strong>)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="total-price">
+                        <span class="total-price-label">합계 금액</span>
+                        <span class="total-price-value" id="totalPrice">0원</span>
+                    </div>
+                </div>
+
+                <!-- 1인 정보 -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-user"></i> 첫 번째 분 정보
+                    </h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name1">이름 *</label>
+                            <input type="text" id="name1" name="name1" required placeholder="홍길동">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender1">성별 *</label>
+                            <select id="gender1" name="gender1" required>
+                                <option value="">선택하세요</option>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birth_type1">생년월일 종류 *</label>
+                            <select id="birth_type1" name="birth_type1" required>
+                                <option value="solar">양력</option>
+                                <option value="lunar">음력</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>생년월일 *</label>
+
+                            <div style="display:flex; gap:8px;">
+                                <select id="birth_year1" required>
+                                    <option value="">년도</option>
+                                </select>
+
+                                <select id="birth_month1" required>
+                                    <option value="">월</option>
+                                </select>
+
+                                <select id="birth_day1" required>
+                                    <option value="">일</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>태어난 시간</label>
+
+                            <div style="display:flex; gap:8px;">
+                                <select id="birth_hour1">
+                                    <option value="">시</option>
+                                </select>
+
+                                <select id="birth_minute1">
+                                    <option value="">분</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="time_unknown1" name="time_unknown1">
+                                <span>태어난 시간을 모릅니다</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2인 정보 (조건부 표시) -->
+                <div class="form-section" id="person2Section" style="display: none;">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-user-friends"></i> 두 번째 분 정보
+                    </h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name2">이름 *</label>
+                            <input type="text" id="name2" name="name2" placeholder="김영희">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender2">성별 *</label>
+                            <select id="gender2" name="gender2">
+                                <option value="">선택하세요</option>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birth_type2">생년월일 종류 *</label>
+                            <select id="birth_type2" name="birth_type2">
+                                <option value="solar">양력</option>
+                                <option value="lunar">음력</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>생년월일 *</label>
+
+                            <div style="display:flex; gap:8px;">
+                                <select id="birth_year2" required>
+                                    <option value="">년도</option>
+                                </select>
+
+                                <select id="birth_month2" required>
+                                    <option value="">월</option>
+                                </select>
+
+                                <select id="birth_day2" required>
+                                    <option value="">일</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>태어난 시간</label>
+
+                            <div style="display:flex; gap:8px;">
+                                <select id="birth_hour2">
+                                    <option value="">시</option>
+                                </select>
+
+                                <select id="birth_minute2">
+                                    <option value="">분</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="time_unknown2" name="time_unknown2">
+                                <span>태어난 시간을 모릅니다</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 연락처 정보 -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-phone"></i> 연락처 정보
+                    </h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="phone">전화번호 *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="010-0000-0000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">이메일 *</label>
+                            <input type="email" id="email" name="email" required placeholder="example@email.com">
+                            <small>리포트를 받으실 이메일 주소를 정확히 입력해주세요</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 추가 질문 -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-question-circle"></i> 더 알고 싶은 내용 (선택사항)
+                    </h3>
+
+                    <div class="form-group">
+                        <textarea id="additional_questions" name="additional_questions" rows="5"
+                            placeholder="특별히 궁금하신 내용이나 상담받고 싶은 부분을 자유롭게 적어주세요"></textarea>
+                    </div>
+                </div>
+
+                <!-- 안내 사항 -->
+                <div class="form-notice">
+                    <h4><i class="fas fa-info-circle"></i> 안내 사항</h4>
+                    <ul>
+                        <li><strong>입금계좌:</strong> 농협 351-1377-7789-03 (예금주: 문광희)</li>
+                        <li>사주·운세 리포트는 입금 후 <strong>24시간 내</strong> 이메일로 PDF 전송됩니다</li>
+                        <li>사주·운세 해석은 참고용 콘텐츠이며, 개인의 선택과 판단이 중요합니다</li>
+                        <li>주문 후 환불이 불가능합니다. 신중히 선택해주세요</li>
+                        <li>입금 확인 및 문의: <strong>010-9486-4936</strong></li>
+                    </ul>
+                </div>
+
+                <!-- 개인정보 동의 -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-shield-halved"></i> 개인정보 수집 및 이용 동의
+                    </h3>
+
+                    <div class="privacy-box"
+                        style="max-height:200px; overflow-y:auto; border:3px solid #ccc; padding:10px;">
+                        <strong>개인정보 수집 및 이용 동의서</strong><br><br>
+                        1. 상담신청서 작성 시 - 이름, 생년월일시, 성별, 연락처(전화번호, 이메일) 등은 사주상담 특성상 필요정보 자료로 상담의뢰인 동의로 간주합니다.<br><br>
+                        2. 수집된 고객님의 소중한 정보는 상담 목적 외에는 사용하지 않으며, 상담 목적 달성 후 즉시 파기됩니다.<br><br>
+                        3. 개인정보 수집 및 이용에 동의하셔야 상담신청서 제출이 가능합니다. 동의하지 않을 경우 상담신청이 제한됩니다.
+                    </div>
+                </div>
+
+                <div class="privacy-agree-container">
+                    <label class="privacy-agree-label">
+                        <input type="checkbox" id="privacyAgree" name="privacy_agreement" required>
+                        <span>위 개인정보 수집 및 이용에 동의합니다.</span>
+                    </label>
+                </div>
+
+                <!-- 제출 버튼 -->
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-large" disabled>
+                        <i class="fas fa-paper-plane"></i> 상담 신청하기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">자주 묻는 질문</h2>
+                <p class="section-description">궁금하신 내용을 확인해보세요</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>태어난 시간을 모르는데 상담이 가능한가요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>네, 가능합니다. 태어난 시간을 모르시는 경우 '시간 모름'으로 체크해주시면 됩니다. 다만 사주 분석의 정확도가 다소 낮아질 수 있으니, 가능하다면 가족이나
+                            출생신고서를 통해 확인해보시는 것을 권장합니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>양력과 음력을 어떻게 구분하나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>일반적으로 병원에서 태어나신 경우 양력 생일을 사용합니다. 주민등록증과 출생신고서에 기재된 날짜가 양력입니다. 음력은 한국 전통 달력으로, 명절(설날, 추석 등)을
+                            계산하는데 사용됩니다. 확실하지 않으시면 부모님께 확인해보시기 바랍니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>리포트는 언제 받을 수 있나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>입금 확인 후 24시간 이내에 이메일로 PDF 형식의 리포트를 발송해드립니다. 주말이나 공휴일에는 처리가 다소 지연될 수 있으니 양해 부탁드립니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>환불이 가능한가요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>주문 후 환불이 불가능합니다. 디지털 콘텐츠의 특성상 신청과 동시에 제작이 시작되므로 환불이 어렵습니다. 신중히 선택해주시기 바랍니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>개인정보는 안전하게 관리되나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>네, 고객님의 개인정보는 철저히 보호됩니다. 수집된 정보는 사주 상담 목적으로만 사용되며, 제3자에게 제공되지 않습니다. 상담 완료 후 일정 기간이 지나면 안전하게
+                            폐기됩니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>2인 상담은 어떤 경우에 신청하나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>부부, 연인, 가족, 사업 파트너 등 두 분의 사주를 함께 보고 싶으신 경우 2인 상담을 신청하시면 됩니다. 2인 상담은 개별 상담보다 저렴하며, 두 분의 사주를
+                            종합적으로 분석해드립니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">연락처</h2>
+                <p class="section-description">궁금하신 점은 언제든지 문의해주세요</p>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>전화 문의</h3>
+                        <p><a href="tel:010-9486-4936">010-9486-4936</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-kickstarter-k"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>카카오톡 상담</h3>
+                        <p><a href="https://pf.kakao.com/_MgnDn/chat" target="_blank" rel="noopener noreferrer">카카오톡 채널
+                                바로가기</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>입금 계좌</h3>
+                        <p>농협 351-1377-7789-03<br>(예금주: 문광희)</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>처리 시간</h3>
+                        <p>입금 후 24시간 내<br>이메일 PDF 발송</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="palgwae-logo.png" alt="사주마당 팔괘 로고" class="footer-logo-image">
+                    <span class="footer-logo-text">사주마당</span>
+                </div>
+                <p class="footer-text">
+                    정통 명리학 전문인과 함께하는 정확하고 상세한 사주 분석<br>
+                    사주·운세 해석은 참고용 콘텐츠이며, 개인의 선택과 판단이 중요합니다
+                </p>
+                <p class="footer-copyright">
+                    &copy; 2026 사주마당. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="맨 위로">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating KakaoTalk Button -->
+    <a href="https://pf.kakao.com/_MgnDn/chat" target="_blank" rel="noopener noreferrer" class="kakao-floating-btn"
+        aria-label="카카오톡 상담">
+        <i class="fab fa-kickstarter-k"></i>
+        <span class="kakao-text">카톡상담</span>
+    </a>
+
+    <!-- Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>신청이 완료되었습니다!</h2>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="modalConfirm">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // EmailJS 초기화
+            emailjs.init("tl5jPJIoiOMEfjMHj");
+
+            // 폼과 버튼 찾기 (아이디가 달라도 알아서 찾아오도록 보완)
+            let form = document.getElementById("emailForm") || document.querySelector("form");
+            let submitBtn = document.getElementById("submitBtn") || document.querySelector("button[type='submit']");
+
+            // [핵심] 잠겨있는 버튼을 강제로 풀어줍니다. (이제 클릭이 됩니다!)
+            if (submitBtn) {
+                submitBtn.disabled = false;
+            }
+
+            if (!form) {
+                console.error("신청서 폼(form) 태그를 찾을 수 없습니다.");
+                return;
+            }
+
+            // 제출 버튼 클릭 시 실행
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // 새로고침 방지
+
+                if (submitBtn) submitBtn.disabled = true; // 중복 발송 방지
+
+                // EmailJS로 메일 전송
+                emailjs.sendForm("service_9oog4dh", "template_3uwin9a", form)
+                    .then(function () {
+                        alert("상담 신청이 정상적으로 접수되었습니다.");
+                        form.reset();
+                        if (submitBtn) submitBtn.disabled = false;
+                    })
+                    .catch(function (error) {
+                        console.error("EmailJS 전송 에러:", error);
+                        alert("이메일 전송 실패: " + (error.text || JSON.stringify(error)));
+                        if (submitBtn) submitBtn.disabled = false;
+                    });
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="main.js"></script>
+
+</body>
+
+</html>
