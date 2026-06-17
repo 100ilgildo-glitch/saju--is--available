@@ -893,47 +893,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // EmailJS 초기화
-            emailjs.init("tl5jPJIoiOMEfjMHj");
-
-            // 폼과 버튼 찾기 (아이디가 달라도 알아서 찾아오도록 보완)
-            let form = document.getElementById("emailForm") || document.querySelector("form");
-            let submitBtn = document.getElementById("submitBtn") || document.querySelector("button[type='submit']");
-
-            // [핵심] 잠겨있는 버튼을 강제로 풀어줍니다. (이제 클릭이 됩니다!)
-            if (submitBtn) {
-                submitBtn.disabled = false;
-            }
-
-            if (!form) {
-                console.error("신청서 폼(form) 태그를 찾을 수 없습니다.");
-                return;
-            }
-
-            // 제출 버튼 클릭 시 실행
-            form.addEventListener("submit", function (event) {
-                event.preventDefault(); // 새로고침 방지
-
-                if (submitBtn) submitBtn.disabled = true; // 중복 발송 방지
-
-                // EmailJS로 메일 전송
-                emailjs.sendForm("service_9oog4dh", "template_3uwin9a", form)
-                    .then(function () {
-                        alert("상담 신청이 정상적으로 접수되었습니다.");
-                        form.reset();
-                        if (submitBtn) submitBtn.disabled = false;
-                    })
-                    .catch(function (error) {
-                        console.error("EmailJS 전송 에러:", error);
-                        alert("이메일 전송 실패: " + (error.text || JSON.stringify(error)));
-                        if (submitBtn) submitBtn.disabled = false;
-                    });
-            });
-        });
-    </script>
-
+   
     <script>
   window.SAJU_CONFIG = {
     emailjsPublicKey: "tl5jPJIoiOMEfjMHj",
