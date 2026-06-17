@@ -1,475 +1,568 @@
-// ===================================
-// 사주마당 - 콘솔 추적 강화형 자바스크립트
-// ===================================
+(() => {
+  if (window.__SAJU_MAIN_INITIALIZED__) return;
+  window.__SAJU_MAIN_INITIALIZED__ = true;
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("📢 사주마당 프로그램이 정상적으로 시작되었습니다!");
-    initNavigation();
-    initScrollEffects();
-    initForm();
-    initFAQ();
-    initModal();
-});
+  const CONFIG = {
+    emailjsPublicKey: 'tl5jPJIoiOMEfjMHj',
+    emailjsServiceId: 'service_9oog4dh',
+    emailjsTemplateId: 'template_3uwin9a',
+    gasWebhookUrl: 'https://script.google.com/macros/s/AKfycbx9SVUUk7-zpBiJ4gBObT-vvEGl7qzf5-_S_STdk0JGFmY4zoS6EiIDkCIiHTH5Kzxu/exec',
+    ...(window.SAJU_CONFIG || {})
+  };
 
-// ===================================
-// 1. Navigation (네비게이션)
-// ===================================
-function initNavigation() {
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navbar = document.getElementById('navbar');
+  const STATE = {
+    isSubmitting: false
+  };
 
-    if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form[name="saju-form"]');
+    if (!form) return;
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if(navToggle) navToggle.classList.remove('active');
-            if(navMenu) navMenu.classList.remove('active');
-        });
-    });
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection && navbar) {
-                const navbarHeight = navbar.offsetHeight;
-                const targetPosition = targetSection.offsetTop - navbarHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    window.addEventListener('scroll', function() {
-        if (navbar) {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        }
-    });
-}
-
-// ===================================
-// 2. Scroll Effects (스크롤 효과)
-// ===================================
-function initScrollEffects() {
-    const scrollToTopBtn = document.getElementById('scrollToTop');
-    
-    if (scrollToTopBtn) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                scrollToTopBtn.classList.add('visible');
-            } else {
-                scrollToTopBtn.classList.remove('visible');
-            }
-        });
-
-        scrollToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+    const els = {
+      navbar: document.getElementById('navbar'),
+      navToggle: document.getElementById('navToggle'),
+      navMenu: document.getElementById('navMenu'),
+      navLinks: document.querySelectorAll('.nav-link'),
+      scrollToTop: document.getElementById('scrollToTop'),
+      faqQuestions: document.querySelectorAll('.faq-question'),
+      serviceRadios: document.querySelectorAll('.service-option input[type="radio"]'),
+      totalPrice: document.getElementById('totalPrice'),
+      person2Section: document.getElementById('person2Section'),
+      privacyAgree: document.getElementById('privacyAgree'),
+      submitBtn: document.getElementById('submitBtn'),
+      modal: document.getElementById('successModal'),
+      modalBody: document.getElementById('modalBody'),
+      modalClose: document.getElementById('modalClose'),
+      modalConfirm: document.getElementById('modalConfirm')
     };
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
+    initEmailJS();
+    initSelectOptions();
+    initNav(els);
+    initFaq(els);
+    initScroll(els);
+    initServiceSelection(els);
+    initPhoneFormatter();
+    initTimeUnknownHandlers();
+    initModal(els);
+    initForm(els, form);
 
-    document.querySelectorAll('.service-card, .process-step').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+    togglePerson2Section(els);
+    updateTotalPriceUI(els);
+    syncSubmitState(els);
+  });
+
+  function initEmailJS() {
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS가 로드되지 않았습니다.');
+      return;
+    }
+
+    try {
+      emailjs.init(CONFIG.emailjsPublicKey);
+    } catch (error) {
+      console.error('EmailJS 초기화 실패:', error);
+    }
+  }
+
+  function initSelectOptions() {
+    populateYearMonthDay('1');
+    populateYearMonthDay('2');
+    populateTimeSelects('1');
+    populateTimeSelects('2');
+  }
+
+  function populateYearMonthDay(index) {
+    const yearEl = document.getElementById(`birth_year${index}`);
+    const monthEl = document.getElementById(`birth_month${index}`);
+    const dayEl = document.getElementById(`birth_day${index}`);
+
+    if (!yearEl || !monthEl || !dayEl) return;
+
+    if (yearEl.options.length <= 1) {
+      const currentYear = new Date().getFullYear();
+      for (let year = currentYear; year >= 1930; year -= 1) {
+        yearEl.appendChild(new Option(`${year}년`, String(year)));
+      }
+    }
+
+    if (monthEl.options.length <= 1) {
+      for (let month = 1; month <= 12; month += 1) {
+        monthEl.appendChild(new Option(`${month}월`, String(month).padStart(2, '0')));
+      }
+    }
+
+    const renderDays = () => {
+      const selectedDay = dayEl.value;
+      const year = Number(yearEl.value) || 2000;
+      const month = Number(monthEl.value) || 1;
+      const daysInMonth = new Date(year, month, 0).getDate();
+
+      dayEl.innerHTML = '<option value="">일</option>';
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        dayEl.appendChild(new Option(`${day}일`, String(day).padStart(2, '0')));
+      }
+
+      if (selectedDay && Number(selectedDay) <= daysInMonth) {
+        dayEl.value = selectedDay;
+      }
+    };
+
+    yearEl.addEventListener('change', renderDays);
+    monthEl.addEventListener('change', renderDays);
+    renderDays();
+  }
+
+  function populateTimeSelects(index) {
+    const hourEl = document.getElementById(`birth_hour${index}`);
+    const minuteEl = document.getElementById(`birth_minute${index}`);
+
+    if (hourEl && hourEl.options.length <= 1) {
+      for (let hour = 0; hour <= 23; hour += 1) {
+        hourEl.appendChild(new Option(`${String(hour).padStart(2, '0')}시`, String(hour).padStart(2, '0')));
+      }
+    }
+
+    if (minuteEl && minuteEl.options.length <= 1) {
+      for (let minute = 0; minute <= 59; minute += 1) {
+        minuteEl.appendChild(new Option(`${String(minute).padStart(2, '0')}분`, String(minute).padStart(2, '0')));
+      }
+    }
+  }
+
+  function initNav(els) {
+    if (els.navToggle && els.navMenu) {
+      els.navToggle.addEventListener('click', () => {
+        els.navMenu.classList.toggle('active');
+        els.navToggle.classList.toggle('active');
+      });
+    }
+
+    els.navLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+
+        const target = document.querySelector(href);
+        if (!target) return;
+
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        els.navMenu?.classList.remove('active');
+        els.navToggle?.classList.remove('active');
+      });
     });
-}
 
-// ===================================
-// 3. Form Handling (폼 기능 및 전송)
-// ===================================
-function initForm() {
-    const form = document.getElementById('applicationForm');
-    const totalPriceElement = document.getElementById('totalPrice');
-    const person2Section = document.getElementById('person2Section');
-    const serviceRadios = document.querySelectorAll('input[type="radio"][data-price]');
-    
-    if (!form) {
-        console.error("❌ [심각] 화면에서 'applicationForm'이라는 ID를 가진 폼 태그를 찾을 수 없습니다. HTML 파일을 확인해 주세요.");
-        return;
-    } else {
-        console.log("✅ 신청서 폼 감지 완료 스위치 온!");
-    }
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (event) => {
+        const href = anchor.getAttribute('href');
+        if (!href || href === '#' || anchor.classList.contains('nav-link')) return;
 
-    function fillSelect(elementId, start, end, suffix, pad) {
-        const el = document.getElementById(elementId);
-        if (!el) return;
-        let html = '';
-        if (start > end) {
-            for (let i = start; i >= end; i--) {
-                html += `<option value="${i}">${i}${suffix}</option>`;
-            }
-        } else {
-            for (let i = start; i <= end; i++) {
-                const val = pad ? String(i).padStart(2, '0') : String(i);
-                html += `<option value="${val}">${i}${suffix}</option>`;
-            }
-        }
-        el.innerHTML += html;
-    }
+        const target = document.querySelector(href);
+        if (!target) return;
 
-    // 존재하는 모든 형태의 ID에 옵션 자동 주입
-    ['birth_year1', 'year1', 'birthYear1'].forEach(id => fillSelect(id, new Date().getFullYear(), 1900, '년', false));
-    ['birth_month1', 'month1', 'birthMonth1'].forEach(id => fillSelect(id, 1, 12, '월', true));
-    ['birth_day1', 'day1', 'birthDay1'].forEach(id => fillSelect(id, 1, 31, '일', true));
-    ['birth_hour1', 'hour1', 'birthHour1', 'hour_1'].forEach(id => fillSelect(id, 0, 23, '시', true));
-    ['birth_minute1', 'minute1', 'birthMinute1', 'minute_1'].forEach(id => fillSelect(id, 0, 59, '분', true));
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
 
-    ['birth_year2', 'year2', 'birthYear2'].forEach(id => fillSelect(id, new Date().getFullYear(), 1900, '년', false));
-    ['birth_month2', 'month2', 'birthMonth2'].forEach(id => fillSelect(id, 1, 12, '월', true));
-    ['birth_day2', 'day2', 'birthDay2'].forEach(id => fillSelect(id, 1, 31, '일', true));
-    ['birth_hour2', 'hour2', 'birthHour2', 'hour_2'].forEach(id => fillSelect(id, 0, 23, '시', true));
-    ['birth_minute2', 'minute2', 'birthMinute2', 'minute_2'].forEach(id => fillSelect(id, 0, 59, '분', true));
+  function initFaq(els) {
+    els.faqQuestions.forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        if (!item) return;
 
-    function calculateTotal() {
-        let total = 0;
-        let hasTwoPerson = false;
-
-        serviceRadios.forEach(radio => {
-            if (radio.checked && radio.value !== 'none') {
-                total += parseInt(radio.getAttribute('data-price') || '0');
-                if (radio.value === '2') hasTwoPerson = true;
-            }
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item.active').forEach((activeItem) => {
+          activeItem.classList.remove('active');
         });
 
-        if (person2Section) {
-            if (hasTwoPerson) {
-                person2Section.style.display = 'block';
-                ['name2', 'gender2', 'birth_year2', 'year2', 'birth_month2', 'month2', 'birth_day2', 'day2'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) el.required = true;
-                });
-            } else {
-                person2Section.style.display = 'none';
-                ['name2', 'gender2', 'birth_year2', 'year2', 'birth_month2', 'month2', 'birth_day2', 'day2'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) el.required = false;
-                });
-            }
+        if (!isActive) {
+          item.classList.add('active');
         }
+      });
+    });
+  }
 
-        if (totalPriceElement) {
-            totalPriceElement.textContent = total.toLocaleString('ko-KR') + '원';
-        }
-    }
+  function initScroll(els) {
+    const handleScroll = () => {
+      const y = window.scrollY || window.pageYOffset;
 
-    serviceRadios.forEach(radio => radio.addEventListener('change', calculateTotal));
-    document.querySelectorAll('input[type="radio"][value="none"]').forEach(radio => radio.addEventListener('change', calculateTotal));
+      if (els.navbar) {
+        els.navbar.classList.toggle('scrolled', y > 20);
+      }
 
-    function setupTimeUnknown(chkId, hourIds, minIds) {
-        const chk = document.getElementById(chkId);
-        if (chk) {
-            chk.addEventListener('change', function() {
-                hourIds.concat(minIds).forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) {
-                        el.disabled = chk.checked;
-                        if(chk.checked) el.value = '';
-                    }
-                });
-            });
-        }
-    }
-    setupTimeUnknown('time_unknown1', ['birth_hour1', 'hour1', 'birthHour1', 'hour_1'], ['birth_minute1', 'minute1', 'birthMinute1', 'minute_1']);
-    setupTimeUnknown('time_unknown2', ['birth_hour2', 'hour2', 'birthHour2', 'hour_2'], ['birth_minute2', 'minute2', 'birthMinute2', 'minute_2']);
+      if (els.scrollToTop) {
+        els.scrollToTop.classList.toggle('show', y > 300);
+      }
+    };
 
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    els.scrollToTop?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  function initServiceSelection(els) {
+    els.serviceRadios.forEach((radio) => {
+      radio.addEventListener('change', () => {
+        updateTotalPriceUI(els);
+        togglePerson2Section(els);
+      });
+    });
+  }
+
+  function initPhoneFormatter() {
     const phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/[^\d]/g, '');
-            if (value.length <= 3) e.target.value = value;
-            else if (value.length <= 7) e.target.value = value.slice(0, 3) + '-' + value.slice(3);
-            else e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
-        });
-    }
+    if (!phoneInput) return;
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        console.log("🚀 [작동 시작] 사용자가 신청하기 버튼을 눌렀습니다!");
-        
-        const hasSelectedService = Array.from(serviceRadios).some(radio => radio.checked && radio.value !== 'none');
-        if (!hasSelectedService) { alert('최소 1개 이상의 서비스를 선택해주세요.'); return; }
+    phoneInput.addEventListener('input', (event) => {
+      let value = String(event.target.value || '').replace(/[^\d]/g, '');
+      if (value.length > 11) value = value.slice(0, 11);
 
-        const emailValue = document.getElementById('email').value;
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) { alert('올바른 이메일 주소를 입력해주세요.'); return; }
+      if (value.length <= 3) {
+        event.target.value = value;
+      } else if (value.length <= 7) {
+        event.target.value = `${value.slice(0, 3)}-${value.slice(3)}`;
+      } else {
+        event.target.value = `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7, 11)}`;
+      }
+    });
+  }
 
-        const phoneValue = document.getElementById('phone').value;
-        if (!/^\d{3}-\d{4}-\d{4}$/.test(phoneValue)) { alert('올바른 전화번호 형식을 입력해주세요.'); return; }
+  function initTimeUnknownHandlers() {
+    ['1', '2'].forEach((index) => {
+      const checkbox = document.getElementById(`time_unknown${index}`);
+      const hourEl = document.getElementById(`birth_hour${index}`);
+      const minuteEl = document.getElementById(`birth_minute${index}`);
+      if (!checkbox || !hourEl || !minuteEl) return;
 
-        console.log("📦 화면에 입력된 데이터를 수집하는 중...");
-        const formData = collectFormData();
-        console.log("수집된 데이터 확인용:", formData);
+      const sync = () => {
+        const disabled = checkbox.checked;
+        hourEl.disabled = disabled;
+        minuteEl.disabled = disabled;
 
-        const nowStr = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-        
-        const finalPayload = {
-            "접수일": nowStr,
-            "상담신청서1": formData.services1.join(', '),
-            "이름1": formData.person1.name,
-            "성별1": formData.person1.gender,
-            "생년월일1": formData.person1.birthDate,
-            "시간1": formData.person1.birthTime,
-            "양력음력1": formData.person1.birthType,
-            "상담신청서2": formData.person2 ? formData.services2.join(', ') : '',
-            "이름2": formData.person2 ? formData.person2.name : '',
-            "성별2": formData.person2 ? formData.person2.gender : '',
-            "생년월일2": formData.person2 ? formData.person2.birthDate : '',
-            "시간2": formData.person2 ? formData.person2.birthTime : '',
-            "양력음력2": formData.person2 ? formData.person2.birthType : '',
-            "합계금액": formData.totalPrice,
-            "전화번호": formData.contact.phone,
-            "이메일": formData.contact.email,
-            "비고": formData.additionalQuestions,
+        if (disabled) {
+          hourEl.value = '';
+          minuteEl.value = '';
+        }
+      };
 
-            "to_name": formData.person1.name,
-            "접수일시": nowStr,
-            "평생사주": formData.emailServices["평생사주"],
-            "신년운": formData.emailServices["2026년 신년운"],
-            "재물운": formData.emailServices["재물운"],
-            "건강운": formData.emailServices["건강운"],
-            "직업운": formData.emailServices["직업운"],
-            "궁합": formData.emailServices["궁합"]
-        };
+      checkbox.addEventListener('change', sync);
+      sync();
+    });
+  }
 
-        console.log("📡 구글 시트로 데이터를 전송합니다...");
-        
-        fetch("https://script.google.com/macros/s/AKfycbx9SVUUk7-zpBiJ4gBObT-vvEGl7qzf5-_S_STdk0JGFmY4zoS6EiIDkCIiHTH5Kzxu/exec",{
-            method: "POST",
-            body: JSON.stringify(finalPayload)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log("✅ [구글 시트 저장 완전 성공!!!]", data);
-        })
-        .catch(err => {
-            console.error("❌ [구글 시트 저장 실패] 에러 원인 내용:", err);
-        });
-        
-        showSuccessModal(formData);
+  function initModal(els) {
+    const closeModal = () => {
+      if (els.modal) els.modal.style.display = 'none';
+    };
+
+    els.modalClose?.addEventListener('click', closeModal);
+    els.modalConfirm?.addEventListener('click', closeModal);
+    els.modal?.addEventListener('click', (event) => {
+      if (event.target === els.modal) closeModal();
+    });
+  }
+
+  function initForm(els, form) {
+    els.privacyAgree?.addEventListener('change', () => syncSubmitState(els));
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if (STATE.isSubmitting) return;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const emailValue = document.getElementById('email')?.value?.trim() || '';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        alert('올바른 이메일 주소를 입력해주세요.');
+        return;
+      }
+
+      const phoneValue = document.getElementById('phone')?.value?.trim() || '';
+      if (!/^\d{3}-\d{4}-\d{4}$/.test(phoneValue)) {
+        alert('올바른 전화번호 형식을 입력해주세요.');
+        return;
+      }
+
+      const payload = buildPayload();
+
+      if (!payload.selected_services.length) {
+        alert('최소 1개 이상의 상담 서비스를 선택해주세요.');
+        return;
+      }
+
+      if (!CONFIG.gasWebhookUrl) {
+        alert('Google Sheet 웹앱 URL이 설정되지 않았습니다. window.SAJU_CONFIG.gasWebhookUrl에 Apps Script /exec 주소를 넣어주세요.');
+        return;
+      }
+
+      if (typeof emailjs === 'undefined') {
+        alert('EmailJS가 로드되지 않았습니다.');
+        return;
+      }
+
+      STATE.isSubmitting = true;
+      syncSubmitState(els);
+
+      try {
+        const [sheetResult, emailResult] = await Promise.allSettled([
+          sendToGoogleSheet(payload),
+          sendToEmailJS(payload)
+        ]);
+
+        const sheetOk = sheetResult.status === 'fulfilled';
+        const emailOk = emailResult.status === 'fulfilled';
+
+        if (!sheetOk || !emailOk) {
+          console.error('Google Sheet 결과:', sheetResult);
+          console.error('EmailJS 결과:', emailResult);
+          throw new Error('일부 전송 실패');
+        }
+
+        showSuccessModal(els, payload);
         form.reset();
-        calculateTotal();
+        resetFormUI(els);
+      } catch (error) {
+        console.error('상담 신청 전송 오류:', error);
+        alert('상담 신청 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      } finally {
+        STATE.isSubmitting = false;
+        syncSubmitState(els);
+      }
+    }, true);
+  }
+
+  function updateTotalPriceUI(els) {
+    const total = calculateTotalPrice();
+    if (els.totalPrice) {
+      els.totalPrice.textContent = `${total.toLocaleString('ko-KR')}원`;
+    }
+  }
+
+  function calculateTotalPrice() {
+    return [...document.querySelectorAll('.service-option input[type="radio"]:checked')]
+      .reduce((sum, input) => sum + Number(input.dataset.price || 0), 0);
+  }
+
+  function togglePerson2Section(els) {
+    if (!els.person2Section) return;
+
+    const needsPerson2 = selectedServices().some((service) => service.people === 2);
+    els.person2Section.style.display = needsPerson2 ? 'block' : 'none';
+
+    ['name2', 'gender2', 'birth_year2', 'birth_month2', 'birth_day2'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      if (needsPerson2) {
+        el.setAttribute('required', 'required');
+      } else {
+        el.removeAttribute('required');
+      }
     });
 
-    calculateTotal();
-}
-
-function collectFormData() {
-    const commentsEl = document.getElementById('comments') || document.getElementById('additional_questions');
-    
-    function findValue(possibleIds) {
-        for (let id of possibleIds) {
-            const el = document.getElementById(id);
-            if (el && el.value !== undefined) return el.value;
-        }
-        return '';
+    if (!needsPerson2) {
+      clearPerson2Fields();
     }
-    
-    function getChecked(id) {
-        const el = document.getElementById(id);
-        return el ? el.checked : false;
-    }
+  }
 
-    const priceEl = document.getElementById('totalPrice');
-    let totalPriceText = priceEl ? priceEl.textContent : '';
-    if(!totalPriceText) {
-        const altPrice = document.querySelector('.total-price') || document.querySelector('[path="totalPrice"]');
-        totalPriceText = altPrice ? altPrice.textContent : '0원';
-    }
-
-    const h1 = findValue(['birth_hour1', 'hour1', 'birthHour1', 'hour_1']);
-    const m1 = findValue(['birth_minute1', 'minute1', 'birthMinute1', 'minute_1']);
-    const timeStr1 = getChecked('time_unknown1') ? '시간 미상' : (h1 && m1 ? h1 + '시 ' + m1 + '분' : '미입력');
-
-    const y1 = findValue(['birth_year1', 'year1', 'birthYear1']);
-    const mo1 = findValue(['birth_month1', 'month1', 'birthMonth1']);
-    const d1 = findValue(['birth_day1', 'day1', 'birthDay1']);
-    const birthStr1 = (y1 && mo1 && d1) ? `${y1}년 ${mo1}월 ${d1}일` : '미입력';
-
-    const data = {
-        services1: [],
-        services2: [],
-        totalPrice: totalPriceText,
-        emailServices: { "평생사주": "", "2026년 신년운": "", "재물운": "", "건강운": "", "직업운": "", "궁합": "" },
-        person1: {
-            name: findValue(['name1', 'birth_name1']),
-            gender: findValue(['gender1']) === 'male' ? '남성' : '여성',
-            birthType: findValue(['birth_type1', 'birthType1']) === 'solar' ? '양력' : '음력',
-            birthDate: birthStr1,
-            birthTime: timeStr1
-        },
-        contact: {
-            phone: findValue(['phone', 'telephone']),
-            email: findValue(['email', 'user_email'])
-        },
-        additionalQuestions: commentsEl ? commentsEl.value : ''
-    };
-
-    const serviceMapping = {
-        'service_lifelong': '평생사주',
-        'service_newyear': '2026년 신년운',
-        'service_wealth': '재물운',
-        'service_health': '건강운',
-        'service_career': '직업운',
-        'service_compatibility': '궁합'
-    };
-
-    Object.keys(serviceMapping).forEach(key => {
-        const selected = document.querySelector(`input[name="${key}"]:checked`);
-        if (selected && selected.value !== 'none') {
-            const label = serviceMapping[key];
-            if (selected.value === '1') {
-                data.services1.push(`${label} (1인)`);
-                data.emailServices[label] = "1인 신청";
-            } else if (selected.value === '2') {
-                data.services1.push(`${label} (1인)`);
-                data.services2.push(`${label} (상대방)`);
-                data.emailServices[label] = "2인 신청";
-            }
-        }
+  function clearPerson2Fields() {
+    ['name2', 'gender2', 'birth_type2', 'birth_year2', 'birth_month2', 'birth_day2', 'birth_hour2', 'birth_minute2'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
     });
 
-    const p2Sect = document.getElementById('person2Section');
-    if (p2Sect && p2Sect.style.display === 'block') {
-        const h2 = findValue(['birth_hour2', 'hour2', 'birthHour2', 'hour_2']);
-        const m2 = findValue(['birth_minute2', 'minute2', 'birthMinute2', 'minute_2']);
-        const timeStr2 = getChecked('time_unknown2') ? '시간 미상' : (h2 && m2 ? h2 + '시 ' + m2 + '분' : '미입력');
+    const timeUnknown2 = document.getElementById('time_unknown2');
+    if (timeUnknown2) timeUnknown2.checked = false;
 
-        const y2 = findValue(['birth_year2', 'year2', 'birthYear2']);
-        const mo2 = findValue(['birth_month2', 'month2', 'birthMonth2']);
-        const d2 = findValue(['birth_day2', 'day2', 'birthDay2']);
-        const birthStr2 = (y2 && mo2 && d2) ? `${y2}년 ${mo2}월 ${d2}일` : '미입력';
+    const hour2 = document.getElementById('birth_hour2');
+    const minute2 = document.getElementById('birth_minute2');
+    if (hour2) hour2.disabled = false;
+    if (minute2) minute2.disabled = false;
+  }
 
-        data.person2 = {
-            name: findValue(['name2', 'birth_name2']),
-            gender: findValue(['gender2']) === 'male' ? '남성' : '여성',
-            birthType: findValue(['birth_type2', 'birthType2']) === 'solar' ? '양력' : '음력',
-            birthDate: birthStr2,
-            birthTime: timeStr2
+  function syncSubmitState(els) {
+    if (!els.submitBtn) return;
+    const agreed = !!els.privacyAgree?.checked;
+    els.submitBtn.disabled = STATE.isSubmitting || !agreed;
+  }
+
+  function selectedServices() {
+    const defs = [
+      { key: 'service_lifelong', label: '평생사주' },
+      { key: 'service_newyear', label: '2026년 신년운' },
+      { key: 'service_wealth', label: '재물운' },
+      { key: 'service_health', label: '건강운' },
+      { key: 'service_career', label: '직업운' },
+      { key: 'service_compatibility', label: '궁합' }
+    ];
+
+    return defs
+      .map((def) => {
+        const checked = document.querySelector(`input[name="${def.key}"]:checked`);
+        if (!checked || checked.value === 'none') return null;
+        return {
+          key: def.key,
+          label: def.label,
+          people: Number(checked.value),
+          price: Number(checked.dataset.price || 0)
         };
-    }
-    return data;
-}
+      })
+      .filter(Boolean);
+  }
 
-// ===================================
-// 4. FAQ Accordion (자주 묻는 질문)
-// ===================================
-function initFAQ() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        const q = item.querySelector('.faq-question');
-        if(q) {
-            q.addEventListener('click', function() {
-                faqItems.forEach(other => {
-                    if (other !== item && other.classList.contains('active')) {
-                        other.classList.remove('active');
-                    }
-                });
-                item.classList.toggle('active');
-            });
-        }
+  function genderText(value) {
+    if (value === 'male') return '남성';
+    if (value === 'female') return '여성';
+    return '';
+  }
+
+  function birthTypeText(value) {
+    return value === 'lunar' ? '음력' : '양력';
+  }
+
+  function buildBirthData(index) {
+    const birthTypeValue = document.getElementById(`birth_type${index}`)?.value || 'solar';
+    const year = document.getElementById(`birth_year${index}`)?.value || '';
+    const month = document.getElementById(`birth_month${index}`)?.value || '';
+    const day = document.getElementById(`birth_day${index}`)?.value || '';
+    const hour = document.getElementById(`birth_hour${index}`)?.value || '';
+    const minute = document.getElementById(`birth_minute${index}`)?.value || '';
+    const timeUnknown = !!document.getElementById(`time_unknown${index}`)?.checked;
+
+    const birthDate = [year, month, day].filter(Boolean).join('-');
+    const birthTime = timeUnknown
+      ? '시간 모름'
+      : ((hour || minute) ? `${String(hour || '00').padStart(2, '0')}:${String(minute || '00').padStart(2, '0')}` : '');
+
+    const birthText = [birthTypeText(birthTypeValue), birthDate, birthTime ? `/ ${birthTime}` : '']
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    return {
+      birth_type: birthTypeText(birthTypeValue),
+      birth_date: birthDate,
+      birth_time: birthTime,
+      birth_text: birthText,
+      time_unknown: timeUnknown
+    };
+  }
+
+  function buildPerson(index) {
+    const birth = buildBirthData(index);
+    return {
+      name: document.getElementById(`name${index}`)?.value?.trim() || '',
+      gender: genderText(document.getElementById(`gender${index}`)?.value || ''),
+      birth_type: birth.birth_type,
+      birth_date: birth.birth_date,
+      birth_time: birth.birth_time,
+      birth_text: birth.birth_text,
+      time_unknown: birth.time_unknown
+    };
+  }
+
+  function buildPayload() {
+    const services = selectedServices();
+    const totalPrice = calculateTotalPrice();
+    const person1 = buildPerson(1);
+    const needsPerson2 = services.some((service) => service.people === 2);
+    const person2 = needsPerson2 ? buildPerson(2) : null;
+
+    return {
+      submitted_at: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }),
+      selected_services: services,
+      selected_services_text: services.map((s) => `${s.label} ${s.people}인 (${s.price.toLocaleString('ko-KR')}원)`).join(', '),
+      total_price: totalPrice,
+      total_price_text: `${totalPrice.toLocaleString('ko-KR')}원`,
+      person1,
+      person2,
+      phone: document.getElementById('phone')?.value?.trim() || '',
+      email: document.getElementById('email')?.value?.trim() || '',
+      additional_questions: document.getElementById('additional_questions')?.value?.trim() || ''
+    };
+  }
+
+  function sendToEmailJS(payload) {
+    const templateParams = {
+      submitted_at: payload.submitted_at,
+      selected_services_text: payload.selected_services_text,
+      total_price_text: payload.total_price_text,
+      name1: payload.person1.name,
+      gender1: payload.person1.gender,
+      birth1: payload.person1.birth_text,
+      birth_date1: payload.person1.birth_date,
+      birth_time1: payload.person1.birth_time,
+      birth_type1: payload.person1.birth_type,
+      name2: payload.person2?.name || '',
+      gender2: payload.person2?.gender || '',
+      birth2: payload.person2?.birth_text || '',
+      birth_date2: payload.person2?.birth_date || '',
+      birth_time2: payload.person2?.birth_time || '',
+      birth_type2: payload.person2?.birth_type || '',
+      phone: payload.phone,
+      email: payload.email,
+      additional_questions: payload.additional_questions || '없음'
+    };
+
+    return emailjs.send(
+      CONFIG.emailjsServiceId,
+      CONFIG.emailjsTemplateId,
+      templateParams
+    );
+  }
+
+  function sendToGoogleSheet(payload) {
+    return fetch(CONFIG.gasWebhookUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify(payload)
     });
-}
+  }
 
-// ===================================
-// 5. Modal (결과 팝업창)
-// ===================================
-function initModal() {
-    const modal = document.getElementById('successModal');
-    const closeBtn = document.getElementById('modalClose');
-    const confirmBtn = document.getElementById('modalConfirm');
+  function showSuccessModal(els, payload) {
+    const message = `신청 서비스: ${payload.selected_services_text}<br>합계 금액: ${payload.total_price_text}<br><br>입금 확인 후 24시간 내 이메일로 PDF 리포트를 보내드립니다.`;
 
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (confirmBtn) confirmBtn.addEventListener('click', closeModal);
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) closeModal();
-        });
-    }
-}
-
-function showSuccessModal(formData) {
-    const modal = document.getElementById('successModal');
-    const body = document.getElementById('modalBody');
-    if (!modal || !body) return;
-
-    let displayServices = [...formData.services1];
-    if(formData.services2.length > 0) {
-        displayServices = displayServices.concat(formData.services2);
+    if (els.modal && els.modalBody) {
+      els.modalBody.innerHTML = message;
+      els.modal.style.display = 'flex';
+      return;
     }
 
-    let html = `
-        <p><strong>신청 서비스:</strong><br>${displayServices.join('<br>')}</p>
-        <p><strong>합계 금액:</strong> ${formData.totalPrice}</p>
-        <hr style="margin:1rem 0; border:none; border-top:1px solid #E5E1D8;">
-        <p><strong>신청자 정보 (1인):</strong><br>
-        이름: ${formData.person1.name} (${formData.person1.gender})<br>
-        생년월일: ${formData.person1.birthDate} (${formData.person1.birthType})<br>
-        태어난 시간: ${formData.person1.birthTime}</p>
-    `;
+    alert(`상담 신청이 정상적으로 접수되었습니다.\n\n신청 서비스: ${payload.selected_services_text}\n합계 금액: ${payload.total_price_text}`);
+  }
 
-    if (formData.person2) {
-        html += `
-            <p><strong>신청자 정보 (2인):</strong><br>
-            이름: ${formData.person2.name} (${formData.person2.gender})<br>
-            생년월일: ${formData.person2.birthDate} (${formData.person2.birthType})<br>
-            태어난 시간: ${formData.person2.birthTime}</p>
-        `;
-    }
+  function resetFormUI(els) {
+    ['1', '2'].forEach((index) => {
+      const timeUnknown = document.getElementById(`time_unknown${index}`);
+      const hourEl = document.getElementById(`birth_hour${index}`);
+      const minuteEl = document.getElementById(`birth_minute${index}`);
 
-    html += `
-        <hr style="margin:1rem 0; border:none; border-top:1px solid #E5E1D8;">
-        <p><strong>연락처:</strong><br>
-        전화: ${formData.contact.phone}<br>
-        이메일: ${formData.contact.email}</p>
-        <p><strong>추가 질문:</strong><br>${formData.additionalQuestions}</p>
-        <hr style="margin:1rem 0; border:none; border-top:1px solid #E5E1D8;">
-        <p style="color:#8B6F47; font-weight:600;">
-        <i class="fas fa-info-circle"></i> 다음 단계:<br>
-        <small style="font-weight:normal;">
-        1. 농협 351-1377-7789-03 (문광희)로 ${formData.totalPrice}을 입금해주세요<br>
-        2. 입금 후 010-9486-4936으로 연락주시거나 입금자명을 남겨주세요<br>
-        3. 24시간 내 ${formData.contact.email}로 PDF 리포트를 발송해드립니다
-        </small>
-        </p>
-    `;
-    body.innerHTML = html;
-    modal.classList.add('active');
-}
+      if (timeUnknown) timeUnknown.checked = false;
+      if (hourEl) {
+        hourEl.disabled = false;
+        hourEl.value = '';
+      }
+      if (minuteEl) {
+        minuteEl.disabled = false;
+        minuteEl.value = '';
+      }
+    });
 
-function closeModal() {
-    const modal = document.getElementById('successModal');
-    if (modal) modal.classList.remove('active');
-}
+    updateTotalPriceUI(els);
+    togglePerson2Section(els);
+  }
+})();
