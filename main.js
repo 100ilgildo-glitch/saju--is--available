@@ -6,7 +6,7 @@
     emailjsPublicKey: 'tl5jPJIoiOMEfjMHj',
     emailjsServiceId: 'service_9oog4dh',
     emailjsTemplateId: 'template_3uwin9a',
-    gasWebhookUrl: 'https://script.google.com/macros/s/AKfycbx9SVUUk7-zpBiJ4gBObT-vvEGl7qzf5-_S_STdk0JGFmY4zoS6EiIDkCIiHTH5Kzxu/exec',
+    gasWebhookUrl: 'https://script.google.com/macros/s/AKfycbz7QZ9-U0ch-5cbeAbDMCJdzUrb4Odm-Jp5b28jcbObPFKUGjDujHeoIetNeu41LUZ9xg/exec',
     ...(window.SAJU_CONFIG || {})
   };
 
