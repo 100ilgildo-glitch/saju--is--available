@@ -413,14 +413,15 @@
       email: payload.email,
       additional_questions: payload.additional_questions || '없음',
       message: [
-        `접수일시: ${payload.submitted_at}`,
-        `신청서비스: ${payload.selected_services_text}`,
+        `접수일: ${payload.submitted_at}`,
+        `신청서비스1: ${payload.selected_services_text}`,
         `합계금액: ${payload.total_price_text}`,
         `이름1: ${payload.person1.name}`,
         `성별1: ${payload.person1.gender}`,
         `생년월일1: ${payload.person1.birth_date}`,
         `시간1: ${payload.person1.birth_time}`,
         `양력/음력1: ${payload.person1.birth_type}`,
+        payload.person2 ? `신청서비스2: ${payload.selected_services_text}` :'',
         payload.person2 ? `이름2: ${payload.person2.name}` : '',
         payload.person2 ? `성별2: ${payload.person2.gender}` : '',
         payload.person2 ? `생년월일2: ${payload.person2.birth_date}` : '',
@@ -433,6 +434,33 @@
     };
     return emailjs.send(CONFIG.emailjsServiceId, CONFIG.emailjsTemplateId, templateParams);
   }
+
+  const privacyAgree = document.getElementById('privacyAgree');
+const privacyError = document.getElementById('privacyError');
+const saJuForm     = document.querySelector('form[name="saju-form"]');
+
+if (privacyAgree) {
+  privacyAgree.addEventListener('change', function () {
+    if (this.checked) {
+      privacyError.classList.remove('show');
+    }
+  });
+}
+
+if (saJuForm) {
+  saJuForm.addEventListener('submit', function (e) {
+    if (!privacyAgree.checked) {
+      e.preventDefault();
+      e.stopPropagation();
+      privacyError.classList.add('show');
+      privacyAgree.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+      return false;
+    }
+  });
+}
 
   function showSuccess(els, payload) {
     const text = `신청 서비스: ${payload.selected_services_text}<br>합계 금액: ${payload.total_price_text}<br><br>입금 확인 후 24시간 내 이메일로 PDF 리포트를 보내드립니다.`;
@@ -484,4 +512,3 @@ Kakao.API.request({
     console.error(error)
     // 채널 간편 추가 실패 처리
   })
-
