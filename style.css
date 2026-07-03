@@ -1648,7 +1648,190 @@ section {
     border-radius: 12px;
 }
 
+/* ── 개인정보 섹션 전체 ── */
+.privacy-section {
+  margin: 24px 0;
+  width: 100%;
+}
 
+/* 제목 - 다른 섹션 제목과 동일하게 */
+.privacy-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFD700;           /* 금색 */
+  font-size: 1rem;          /* 다른 섹션 제목과 동일 */
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+
+.privacy-icon {
+  font-size: 1rem;
+}
+
+/* 스크롤 박스 - 금색 테두리로 변경 */
+.privacy-box {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid #FFD700 !important;  /* ✅ 금색 테두리 */
+  border-radius: 4px;
+  padding: 14px 16px;
+  background-color: #1a1a1a !important;  /* 다크 배경 */
+  color: #ffffff !important;             /* ✅ 흰색 글씨 */
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+/* 스크롤바 - 금색 */
+.privacy-box::-webkit-scrollbar {
+  width: 6px;
+}
+.privacy-box::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+.privacy-box::-webkit-scrollbar-thumb {
+  background: #FFD700;
+  border-radius: 4px;
+}
+
+/* 첫 문단 */
+.privacy-intro {
+  color: #ffffff !important;  /* ✅ 흰색 */
+  margin: 0 0 10px 0;
+}
+
+/* 각 항목 */
+.privacy-item {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #333333;
+}
+
+.privacy-item strong {
+  color: #FFD700;       /* 금색 강조 */
+  font-size: 13px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.privacy-item p {
+  color: #ffffff !important;  /* ✅ 흰색 */
+  margin: 0;
+  font-size: 13px;
+}
+
+/* 동의 체크박스 */
+.privacy-agree-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.privacy-agree-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #FFD700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.privacy-agree-text {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+/* 오류 메시지 */
+.privacy-error {
+  display: none;
+  color: #ff5555;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.privacy-error.show {
+  display: block;
+}
+
+/* 푸터 전체 배경 및 기본 폰트 설정 */
+.site-footer {
+    background-color: #000000; /* 검은색 배경색 */
+    color: #ffffff;            /* 기본 글자색 흰색 */
+    padding: 40px 20px;
+    font-family: 'Malgun Gothic', sans-serif;
+    line-height: 1.6;
+}
+
+/* 중앙 정렬 및 최대 너비 제한 */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center; /* 핵심: 모든 텍스트를 가운데 정렬 */
+}
+
+/* 사업자 정보 스타일 */
+.company-info {
+    font-size: 14px;
+    color: #cccccc; /* 살짝 밝은 회색으로 가독성 확보 */
+    margin-bottom: 15px;
+}
+.company-info strong {
+    color: #ffffff;
+}
+
+/* 이용약관 링크 스타일 */
+.footer-links a {
+    color: #4a90e2; /* 링크 색상 (기존 파란색 유지 혹은 변경 가능) */
+    text-decoration: none;
+    font-size: 14px;
+}
+.footer-links a:hover {
+    text-decoration: underline;
+}
+.footer-links .divider {
+    color: #555555;
+    margin: 0 10px;
+}
+
+/* 구분선 스타일 */
+.footer-divider {
+    border: 0;
+    height: 1px;
+    background: #222222;
+    margin: 30px 0;
+}
+
+/* 브랜드 로고 영역 */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 로고와 텍스트를 가로축 가운데로 */
+    margin-bottom: 15px;
+}
+.footer-logo-image {
+    width: 30px; /* 로고 이미지 크기에 맞게 조절하세요 */
+    height: auto;
+    margin-right: 10px;
+}
+.footer-logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00; /* 황금색 포인트 컬러 */
+}
+
+/* 하단 안내 문구 및 카피라이트 */
+.footer-text {
+    font-size: 15px;
+    color: #dddddd;
+    margin-bottom: 15px;
+}
+.footer-copyright {
+    font-size: 12px;
+    color: #777777;
+}
 
 
 
