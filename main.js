@@ -77,6 +77,8 @@
       }
 
       const payload = buildPayload();
+      payload.phone = phone;
+      payload.email = email;
       if (!payload.selected_services.length) {
         alert('최소 1개 이상의 서비스를 선택해주세요.');
         return;
