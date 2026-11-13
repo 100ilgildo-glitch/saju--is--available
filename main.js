@@ -465,16 +465,31 @@ if (saJuForm) {
 }
 
   function showSuccess(els, payload) {
-    const text = `신청 서비스: ${payload.selected_services_text}<br>합계 금액: ${payload.total_price_text}<br><br>입금 확인 후 24시간 내 이메일로 PDF 리포트를 보내드립니다.`;
-    if (els.modal && els.modalBody) {
-      els.modalBody.innerHTML = text;
-      els.modal.style.display = 'flex';
-    } else {
-      alert(`상담 신청이 정상적으로 접수되었습니다.\n\n신청 서비스: ${payload.selected_services_text}\n합계 금액: ${payload.total_price_text}`);
-    }
-  }
+  const text = `신청 서비스: ${payload.selected_services_text}<br>합계 금액: ${payload.total_price_text}<br><br>입금 확인 후 24시간 내 이메일로 PDF 리포트를 보내드립니다.`;
 
-  function resetUI(els) {
+  if (els.modal && els.modalBody) {
+    els.modalBody.innerHTML = text;
+
+    const greeting = document.createElement('p');
+    const customerName = document.createElement('strong');
+    customerName.textContent = payload.person1.name;
+
+    greeting.append(
+      '안녕하세요, ',
+      customerName,
+      ' 님!',
+      document.createElement('br'),
+      '사주마당에 상담을 신청해 주셔서 감사합니다.'
+    );
+    els.modalBody.prepend(greeting);
+
+    els.modal.style.display = 'flex';
+  } else {
+    alert(`상담 신청이 정상적으로 접수되었습니다.\n\n신청 서비스: ${payload.selected_services_text}\n합계 금액: ${payload.total_price_text}`);
+  }
+}
+  
+   function resetUI(els) {
     ['1', '2'].forEach((i) => {
       const checkbox = document.getElementById(`time_unknown${i}`);
       const hour = document.getElementById(`birth_hour${i}`);
