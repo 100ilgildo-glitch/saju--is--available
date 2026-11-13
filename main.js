@@ -279,7 +279,7 @@
   function selectedServices() {
     const defs = [
       { key: 'service_lifelong', label: '평생사주' },
-      { key: 'service_newyear', label: '2026년 신년운' },
+      { key: 'service_newyear', label: '2027년 신년운' },
       { key: 'service_wealth', label: '재물운' },
       { key: 'service_health', label: '건강운' },
       { key: 'service_career', label: '직업운' },
