@@ -416,7 +416,7 @@
       additional_questions: payload.additional_questions || '없음',
       message: [
         `접수일: ${payload.submitted_at}`,
-        `신청서비스1: ${payload.selected_services_text}`,
+        주문상품명: ${payload.selected_services_text}`,
         `합계금액: ${payload.total_price_text}`,
         `이름1: ${payload.person1.name}`,
         `성별1: ${payload.person1.gender}`,
